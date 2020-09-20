@@ -1,4 +1,4 @@
-name: Java Build CI
+name: Github Action Java Build CI
 
 on: [push]
 
