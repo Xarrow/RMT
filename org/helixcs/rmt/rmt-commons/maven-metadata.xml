@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>org.helixcs.rmt</groupId>
-  <artifactId>rmt-dependencies</artifactId>
+  <artifactId>rmt-commons</artifactId>
   <versioning>
     <release>1.0</release>
     <versions>
       <version>1.0</version>
     </versions>
-    <lastUpdated>20200920161113</lastUpdated>
+    <lastUpdated>20200920161123</lastUpdated>
   </versioning>
 </metadata>
