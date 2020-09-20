@@ -1,0 +1,13 @@
+*.class
+*.bak
+*/target/*
+*.project
+*.classpath
+*.idea/*
+*.iml
+*/.settings/*
+*/bin/*
+*.log
+*.settings/*
+*.vertx/*
+*.jar

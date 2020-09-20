@@ -1,0 +1,28 @@
+language: java
+sudo: required
+install: true
+script: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+dist: trusty
+jdk:
+  - openjdk8
+
+notifications:
+  email:
+    - zhangjian12424@gmail.com
+  on_success: never
+  on_failure: always
+
+services:
+  - docker
+after_success:
+  - docker build -t helixcs/rmt .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push helixcs/rmt:latest
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: RELEASE/rmt-app.jar
+  cleanup: true
+  on:
+    tags: true

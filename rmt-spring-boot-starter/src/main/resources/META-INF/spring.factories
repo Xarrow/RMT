@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.helixcs.rmt.spring.boot.starter.RmtStarterAutoConfiguration
