@@ -9,7 +9,7 @@
     <relativePath>../rmt-dependencies/pom.xml</relativePath>
   </parent>
   <groupId>org.helixcs.rmt</groupId>
-  <artifactId>rmt-api</artifactId>
+  <artifactId>rmt-spring-boot-starter</artifactId>
   <version>1.0</version>
   <licenses>
     <license>
@@ -20,51 +20,33 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>org.jetbrains.pty4j</groupId>
-      <artifactId>pty4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna-platform</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-websocket</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
       <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.helixcs.rmt</groupId>
-      <artifactId>rmt-commons</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <scope>provided</scope>
+      <artifactId>rmt-api</artifactId>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>bintray-jetbrains-pty4j</id>
-      <name>bintray</name>
-      <url>https://jetbrains.bintray.com/pty4j</url>
-    </repository>
-  </repositories>
-  <build />
 </project>
