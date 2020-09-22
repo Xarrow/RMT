@@ -16,7 +16,7 @@ public class IndexController {
 
     @RequestMapping("index")
     public String index() {
-        return "rmt.html";
+        return "classpath:/rmt-support/index.html";
     }
 
 }
