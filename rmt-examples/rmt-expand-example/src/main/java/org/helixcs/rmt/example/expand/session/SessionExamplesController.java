@@ -1,4 +1,4 @@
-package org.helixcs.rmt.examples.session;
+package org.helixcs.rmt.example.expand.session;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
-import org.helixcs.rmt.api.protocol.AbstractTerminalStructure;
 import org.helixcs.rmt.api.protocol.TerminalMessage;
 import org.helixcs.rmt.api.session.SessionWrapper;
 import org.helixcs.rmt.api.session.TerminalSession2ProcessManager;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import static org.helixcs.rmt.api.protocol.AbstractTerminalStructure.MessageType.TERMINAL_PRINT;
 

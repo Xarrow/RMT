@@ -8,50 +8,19 @@
         <version>${revision}</version>
         <relativePath>../rmt-dependencies/pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>rmt-spring-boot-starter-example</module>
+        <module>rmt-expand-example</module>
+    </modules>
 
     <artifactId>rmt-examples</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.helixcs.rmt</groupId>
-            <artifactId>rmt-app</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.helixcs.rmt</groupId>
-            <artifactId>rmt-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+
+    </dependencyManagement>
+
 
 </project>
