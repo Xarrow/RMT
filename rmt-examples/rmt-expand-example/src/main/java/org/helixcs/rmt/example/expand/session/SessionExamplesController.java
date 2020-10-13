@@ -1,4 +1,4 @@
-package org.helixcs.rmt.example.expand.session;
+package io.github.xarrow.rmt.example.expand.session;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
-import org.helixcs.rmt.api.protocol.TerminalMessage;
-import org.helixcs.rmt.api.session.SessionWrapper;
-import org.helixcs.rmt.api.session.TerminalSession2ProcessManager;
-import org.helixcs.rmt.api.session.TerminalSessionManager;
+import io.github.xarrow.rmt.api.protocol.TerminalMessage;
+import io.github.xarrow.rmt.api.session.SessionWrapper;
+import io.github.xarrow.rmt.api.session.TerminalSession2ProcessManager;
+import io.github.xarrow.rmt.api.session.TerminalSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 
-import static org.helixcs.rmt.api.protocol.AbstractTerminalStructure.MessageType.TERMINAL_PRINT;
+import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.MessageType.TERMINAL_PRINT;
 
 /**
  * @Email: zhangjian12424@gmail.com.

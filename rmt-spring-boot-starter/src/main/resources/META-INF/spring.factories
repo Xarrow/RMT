@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.helixcs.rmt.spring.boot.starter.RmtStarterAutoConfiguration
+  io.github.xarrow.rmt.spring.boot.starter.RmtStarterAutoConfiguration
 org.springframework.boot.SpringApplicationRunListener=\
-  org.helixcs.rmt.spring.boot.starter.RmtStarterListener
+  io.github.xarrow.rmt.spring.boot.starter.RmtStarterListener

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rmt-dependencies</artifactId>
-        <groupId>org.helixcs.rmt</groupId>
+        <groupId>io.github.xarrow.rmt</groupId>
         <version>${revision}</version>
         <relativePath>../rmt-dependencies/pom.xml</relativePath>
     </parent>
@@ -38,7 +38,7 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.helixcs.rmt</groupId>
+            <groupId>io.github.xarrow.rmt</groupId>
             <artifactId>rmt-commons</artifactId>
         </dependency>
         <dependency>

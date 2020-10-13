@@ -1,4 +1,4 @@
-package org.helixcs.rmt.example.expand.session;
+package io.github.xarrow.rmt.example.expand.session;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

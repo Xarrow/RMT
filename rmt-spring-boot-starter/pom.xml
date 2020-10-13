@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rmt-dependencies</artifactId>
-        <groupId>org.helixcs.rmt</groupId>
+        <groupId>io.github.xarrow.rmt</groupId>
         <version>${revision}</version>
         <relativePath>../rmt-dependencies/pom.xml</relativePath>
     </parent>
@@ -16,7 +16,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -24,26 +23,23 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-<!--            <scope>provided</scope>-->
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-<!--            <scope>provided</scope>-->
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-webmvc</artifactId>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
         <dependency>
-            <groupId>org.helixcs.rmt</groupId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.xarrow.rmt</groupId>
             <artifactId>rmt-api</artifactId>
         </dependency>
     </dependencies>

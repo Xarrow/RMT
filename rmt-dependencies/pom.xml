@@ -5,7 +5,7 @@
     
     <parent>
         <artifactId>rmt</artifactId>
-        <groupId>org.helixcs.rmt</groupId>
+        <groupId>io.github.xarrow.rmt</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -42,32 +42,32 @@
         <dependencies>
             <!--             RMT internal modules-->
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-examples</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-expand</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.helixcs.rmt</groupId>
+                <groupId>io.github.xarrow.rmt</groupId>
                 <artifactId>rmt-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
