@@ -14,33 +14,71 @@ import org.springframework.web.socket.WebSocketMessage;
  * @Desc:
  */
 public interface TerminalSessionManager {
-    // 注册session
+    
+    /**
+     * register session
+     *
+     * @param SessionWrapper
+     */
     void registerSession(final SessionWrapper SessionWrapper);
-
-    // 移除session
+    
+    /**
+     * remove session
+     *
+     * @param SessionWrapper
+     */
     void removeSession(final SessionWrapper SessionWrapper);
-
+    
     SessionWrapper getSession(final String sessionId);
-
-    // 全部session 集合
+    
+    /**
+     * all sessions
+     *
+     * @return
+     */
     Map<String, SessionWrapper> sessionMap();
-
-    // 点对点发送
+    
+    /**
+     * p2p send
+     *
+     * @param SessionWrapper
+     * @param terminalMessage
+     * @param <T>
+     * @throws IOException
+     */
     <T> void p2pSend(final SessionWrapper SessionWrapper, final TerminalMessage terminalMessage) throws IOException;
-
+    
     @Deprecated
-    <T> void p2pSend(final SessionWrapper SessionWrapper, final WebSocketMessage<T> webSocketMessage) throws IOException;
-
-    // 广播发送
+    <T> void p2pSend(final SessionWrapper SessionWrapper, final WebSocketMessage<T> webSocketMessage)
+            throws IOException;
+    
+    /**
+     * broadcast
+     *
+     * @param sessionMap
+     * @param webSocketMessage
+     * @param <T>
+     */
     <T> void broadCastSend(final Map<String, SessionWrapper> sessionMap, final WebSocketMessage<T> webSocketMessage);
-
-    // 过滤发送
-    // todo
-    <T> void filteredSend(final TagFilter messageFilter, final Map<String, SessionWrapper> sessionMap, final WebSocketMessage<T> webSocketMessage);
-
-    // Session 变动监听
+    
+    /**
+     * filter send
+     *
+     * @param messageFilter
+     * @param sessionMap
+     * @param webSocketMessage
+     * @param <T>
+     */
+    <T> void filteredSend(final TagFilter messageFilter, final Map<String, SessionWrapper> sessionMap,
+            final WebSocketMessage<T> webSocketMessage);
+    
+    /**
+     * listener session
+     *
+     * @param terminalSessionListener
+     */
     default void addListener(TerminalSessionListener terminalSessionListener) {
-
+    
     }
-
+    
 }
