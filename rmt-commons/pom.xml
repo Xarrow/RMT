@@ -10,6 +10,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <artifactId>rmt-commons</artifactId>
 
 </project>
