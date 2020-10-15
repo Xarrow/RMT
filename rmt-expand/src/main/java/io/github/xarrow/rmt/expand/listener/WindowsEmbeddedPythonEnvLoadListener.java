@@ -17,10 +17,10 @@ import org.springframework.web.socket.WebSocketSession;
  * @Date: 10/14/2020.
  * @Desc:
  */
-public class EmbeddedPythonEnvLoadListener implements TerminalProcessListener {
+public class WindowsEmbeddedPythonEnvLoadListener implements TerminalProcessListener {
     @Override
     public String listenerName() {
-        return EmbeddedPythonEnvLoadListener.class.getSimpleName();
+        return WindowsEmbeddedPythonEnvLoadListener.class.getSimpleName();
     }
 
     @SneakyThrows

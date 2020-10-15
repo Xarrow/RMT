@@ -7,10 +7,7 @@ from ..common import *
 from .bilibili import bilibili_download
 from .dailymotion import dailymotion_download
 from .iqiyi import iqiyi_download_by_vid
-from .le import letvcloud_download_by_vu
 from .netease import netease_download
-from .qq import qq_download_by_vid
-from .sina import sina_download_by_vid
 from .tudou import tudou_download_by_id
 from .vimeo import vimeo_download_by_id
 from .yinyuetai import yinyuetai_download_by_id
