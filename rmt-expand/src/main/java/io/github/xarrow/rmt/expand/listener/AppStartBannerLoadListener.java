@@ -18,8 +18,8 @@ import org.springframework.web.socket.WebSocketSession;
 import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.MessageType.TERMINAL_PRINT;
 
 /**
- * @Email: wb-zj268791@alibaba-inc.com .
- * @Author: wb-zj268791
+ * @Email: zhangjian12424@gmail.com .
+ * @Author: helixcs
  * @Date: 6/23/2020.
  * @Desc: 启动加载 banner
  */

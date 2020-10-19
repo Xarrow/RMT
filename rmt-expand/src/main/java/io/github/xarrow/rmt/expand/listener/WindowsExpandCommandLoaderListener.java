@@ -13,8 +13,8 @@ import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
- * @Email: wb-zj268791@alibaba-inc.com .
- * @Author: wb-zj268791
+ * @Email: zhangjian12424@gmail.com .
+ * @Author: helixcs
  * @Date: 6/23/2020.
  * @Desc: Windows 拓展命令加载 Listener
  */
