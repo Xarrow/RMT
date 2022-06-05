@@ -1,4 +1,4 @@
-package io.github.xarrow.rmt.example.expand.session;
+package org.helixcs.rmt.example.expand.session;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
