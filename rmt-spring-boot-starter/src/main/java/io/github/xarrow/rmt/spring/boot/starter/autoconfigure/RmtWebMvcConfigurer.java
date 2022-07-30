@@ -1,9 +1,11 @@
-package io.github.xarrow.rmt.spring.boot.starter.configuration;
+package io.github.xarrow.rmt.spring.boot.starter.autoconfigure;
 
 import io.github.xarrow.rmt.spring.boot.starter.RmtStarterProperties;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.RequestPath;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -28,18 +30,16 @@ public class RmtWebMvcConfigurer implements WebMvcConfigurer {
         return "redirect:" + rmtStarterProperties.getWebPath() + "/index.html";
     }
 
+    @SneakyThrows
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String web = rmtStarterProperties.getWebPath();
-        if (web != null) {
+        String webPath = rmtStarterProperties.getWebPath();
+        if (webPath != null) {
             // 配置静态资源路径
-            registry.addResourceHandler(web + "/**").addResourceLocations("classpath:/rmt-support/");
-            try {
-                requestMappingHandlerMapping.registerMapping(RequestMappingInfo.paths(web).build(), this,
-                        RmtWebMvcConfigurer.class.getDeclaredMethod("redirectIndex", HttpServletRequest.class));
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+            registry.addResourceHandler(webPath + "/**").addResourceLocations("classpath:/rmt-support/");
+            requestMappingHandlerMapping.registerMapping(RequestMappingInfo.paths(webPath).build(), this,
+                    RmtWebMvcConfigurer.class.getDeclaredMethod("redirectIndex", HttpServletRequest.class));
         }
     }
 }
+

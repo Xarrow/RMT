@@ -1,4 +1,4 @@
-package io.github.xarrow.rmt.spring.boot.starter.configuration;
+package io.github.xarrow.rmt.spring.boot.starter.autoconfigure;
 
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;

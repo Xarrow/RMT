@@ -1,4 +1,4 @@
-package io.github.xarrow.rmt.spring.boot.starter.configuration;
+package io.github.xarrow.rmt.spring.boot.starter.autoconfigure;
 
 import io.github.xarrow.rmt.spring.boot.starter.RmtStarterProperties;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package io.github.xarrow.rmt.spring.boot.starter.configuration;
+package io.github.xarrow.rmt.spring.boot.starter.autoconfigure;
 
 import io.github.xarrow.rmt.api.lifecycle.TerminalProcessLifecycle;
 import io.github.xarrow.rmt.api.listener.DefaultTerminalListenerManager;
