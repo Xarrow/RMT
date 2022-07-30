@@ -1,4 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   io.github.xarrow.rmt.spring.boot.starter.RmtStarterAutoConfiguration
-org.springframework.boot.SpringApplicationRunListener=\
-  io.github.xarrow.rmt.spring.boot.starter.RmtStarterListener

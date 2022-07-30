@@ -47,7 +47,6 @@
     </developers>
     
     <modules>
-        <module>rmt-app</module>
         <module>rmt-dependencies</module>
         <module>rmt-api</module>
         <module>rmt-commons</module>
