@@ -1,0 +1,26 @@
+-classpath
+'/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-beans/5.2.5.RELEASE/spring-beans-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-expression/5.2.5.RELEASE/spring-expression-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-web/5.2.5.RELEASE/spring-web-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/net/java/dev/jna/jna/4.5.0/jna-4.5.0.jar:/Users/helix/Dev/open_code/RMT/rmt-commons/target/rmt-commons-1.0.jar:/Users/helix/Dev/apache-maven-3.5.0/res/commons-io/commons-io/2.7/commons-io-2.7.jar:/Users/helix/Dev/apache-maven-3.5.0/res/com/fasterxml/jackson/core/jackson-databind/2.10.3/jackson-databind-2.10.3.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-aop/5.2.5.RELEASE/spring-aop-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-websocket/5.2.5.RELEASE/spring-websocket-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-context/5.2.5.RELEASE/spring-context-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/com/fasterxml/jackson/core/jackson-annotations/2.10.3/jackson-annotations-2.10.3.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-webmvc/5.2.5.RELEASE/spring-webmvc-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-jcl/5.2.5.RELEASE/spring-jcl-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/net/java/dev/jna/jna-platform/4.5.0/jna-platform-4.5.0.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/jetbrains/pty4j/pty4j/0.10.0/pty4j-0.10.0.jar:/Users/helix/Dev/apache-maven-3.5.0/res/org/springframework/spring-core/5.2.5.RELEASE/spring-core-5.2.5.RELEASE.jar:/Users/helix/Dev/apache-maven-3.5.0/res/com/fasterxml/jackson/core/jackson-core/2.10.3/jackson-core-2.10.3.jar:/Users/helix/Dev/open_code/RMT/rmt-api/target/rmt-api-1.0.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/helix/Dev/open_code/RMT/rmt-examples/rmt-expand-example/src/main/java:/Users/helix/Dev/open_code/RMT/rmt-examples/rmt-expand-example/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2022 <a href="https://www.apache.org/">The Apache Software Foundation</a>. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/helix/Dev/open_code/RMT/rmt-examples/rmt-expand-example/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'rmt-expand-example 1.0 API'
+-linkoffline
+'http://docs.oracle.com/javase/8/docs/api' '/Users/helix/Dev/open_code/RMT/rmt-examples/rmt-expand-example/target/javadoc-bundle-options'
+-linkoffline
+'https://github.com/Xarrow/RMT/rmt-dependencies/rmt-api/apidocs' '/Users/helix/Dev/open_code/RMT/rmt-api/target/apidocs'
+-use
+-version
+-windowtitle
+'rmt-expand-example 1.0 API'

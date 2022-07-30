@@ -12,8 +12,6 @@ A cloud web terminal based on Spring Boot , Pty4J and WebSocket.
 
 ![img](asserts/slogo.png)
 
-Visit heroku example site: [https://rmt-ns.herokuapp.com/](https://rmt-ns.herokuapp.com/)
-
 ## Quick Start
 
 you can download standalone jar from [release](https://github.com/Xarrow/RMT/releases/).
