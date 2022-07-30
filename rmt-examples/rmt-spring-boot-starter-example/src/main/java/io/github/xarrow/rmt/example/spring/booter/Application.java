@@ -23,7 +23,7 @@ public class Application implements CommandLineRunner {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplication(Application.class).run(args);
-        String property = context.getEnvironment().getProperty("server.port");
+        String property = context.getEnvironment().getProperty("local.server.port");
         System.out.println(property);
     }
 
