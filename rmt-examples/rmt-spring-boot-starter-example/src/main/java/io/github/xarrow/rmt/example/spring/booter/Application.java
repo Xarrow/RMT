@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication(scanBasePackages = "io.github.xarrow.rmt.example.spring.booter")
 @Import(ExpandListenerInitialization.class)
 @Slf4j
-public class Application implements CommandLineRunner {
+public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplication(Application.class).run(args);
@@ -26,8 +26,4 @@ public class Application implements CommandLineRunner {
         System.out.println(property);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-//        log.info("RMT start at http://127.0.0.1:8080/rmt");
-    }
 }

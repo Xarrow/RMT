@@ -82,6 +82,7 @@ public class AppStartBannerLoadListener implements TerminalProcessListener {
         } catch (Exception ignore) {
 
         }
+        lines.add("\n");
         return linesToString(lines);
     }
 
@@ -115,7 +116,7 @@ public class AppStartBannerLoadListener implements TerminalProcessListener {
             }
             String port = context.getEnvironment().getProperty("local.server.port");
             String webPath = context.getEnvironment().getProperty("rmt.starter.web-path");
-            String tip = String.format("RMT started at:: http://127.0.0.1:%s/%s", port, webPath);
+            String tip = String.format("RMT started at:: http://127.0.0.1:%s/%s\n", port, webPath);
             socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
                 put("text", tip);
                 put("type", TERMINAL_PRINT);

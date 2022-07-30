@@ -12,6 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rmt-spring-boot-starter-example</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -32,4 +33,26 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
