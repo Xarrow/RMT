@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static io.github.xarrow.rmt.commons.RmtCommons.DEFAULT_WEBSOCKET_PATH;
+import static io.github.xarrow.rmt.commons.RmtCommons.DEFAULT_WEB_PATH;
+
 @ConfigurationProperties(prefix = "rmt.starter")
 @Accessors(chain = true)
 @Data
 public class RmtStarterProperties extends RmtClientProperties {
-    private static final String DEFAULT_WEB_PATH = "rmt";
-    private static final String DEFAULT_WEBSOCKET_PATH = "terminal";
+
 
     /**
      * 二级目录

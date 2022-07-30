@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Import;
  * @Desc:
  */
 @SpringBootApplication(scanBasePackages = "io.github.xarrow.rmt.example.spring.booter")
+@Import(ExpandListenerInitialization.class)
 @Slf4j
 public class Application implements CommandLineRunner {
 

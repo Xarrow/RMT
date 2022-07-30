@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import static io.github.xarrow.rmt.spring.boot.starter.autoconfigure.RmtCommons.ENABLE;
-import static io.github.xarrow.rmt.spring.boot.starter.autoconfigure.RmtCommons.RMT_STARTER_ENABLE_PREFIX;
+import static io.github.xarrow.rmt.commons.RmtCommons.ENABLE;
+import static io.github.xarrow.rmt.commons.RmtCommons.RMT_STARTER_ENABLE_PREFIX;
 
 @Slf4j
 @Configuration
