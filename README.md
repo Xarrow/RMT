@@ -25,13 +25,13 @@ you can download standalone jar from [release](https://github.com/Xarrow/RMT/rel
  
   ```
   
-* for jar running, required jre 1.8+
+  * for jar running, required jre 1.8+
 
-    ```java
+      ```java
   
-      java -Dfile.encoding=UTF-8 -Dserver.port=8080 -jar rmt-app.jar 
+        java -Dfile.encoding=UTF-8 -Dserver.port=8080 -jar rmt-app.jar 
   
-    ```
+      ```
 
 ## For Developer
 
