@@ -54,7 +54,6 @@ Reference at：[RMT Docs](dev.md)
 
 
 ## Finally
-* For [RuiMei](https://yuruimei.com) .
 
 * Started from [cloudterm](https://github.com/javaterminal/cloudterm) ,stronger with RMT.
 
