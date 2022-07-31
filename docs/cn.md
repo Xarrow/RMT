@@ -52,8 +52,6 @@
 
 ## 最后
 
-* 献给 [瑞梅](https://yuruimei.com) .
-
 * 始于 [cloudterm](https://github.com/javaterminal/cloudterm) , 更胜于此.
 
 ## LICENSE
