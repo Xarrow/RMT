@@ -123,6 +123,10 @@ public class AppStartBannerLoadListener implements TerminalProcessListener {
             }})));
 
             socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
+                put("text", "JVM INFO ============================================== \n");
+                put("type", TERMINAL_PRINT);
+            }})));
+            socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
                 put("text", app());
                 put("type", TERMINAL_PRINT);
             }})));
