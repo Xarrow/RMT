@@ -33,9 +33,8 @@ public class TerminalRQ extends AbstractRQ implements Serializable {
     }
 
     @Override
-    protected <T extends TerminalMessage> T toTerminalMessage(final TextMessage textMessage) throws Exception {
+    protected TerminalRQ toTerminalMessage(final TextMessage textMessage) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        TerminalRQ terminalRQ = objectMapper.readValue(textMessage.getPayload(), TerminalRQ.class);
-        return (T)terminalRQ;
+        return objectMapper.readValue(textMessage.getPayload(), TerminalRQ.class);
     }
 }

@@ -37,7 +37,7 @@ public abstract class AbstractTerminalStructure implements TerminalMessage, Seri
     }
 
     public static abstract class AbstractRQ extends AbstractTerminalStructure implements Serializable {
-        protected abstract <T extends TerminalMessage> T toTerminalMessage(final TextMessage textMessage)
-            throws Exception;
+        protected abstract AbstractRQ toTerminalMessage(final TextMessage textMessage)
+                throws Exception;
     }
 }

@@ -1,9 +1,8 @@
 package io.github.xarrow.rmt.example.spring.booter;
 
 import io.github.xarrow.rmt.api.listener.TerminalProcessListenerManager;
-import io.github.xarrow.rmt.expand.listener.AppStartBannerLoadListener;
+import io.github.xarrow.rmt.expand.listener.AppBasicLoadListener;
 import io.github.xarrow.rmt.expand.listener.TestLocalListener;
-import io.github.xarrow.rmt.expand.listener.WindowsEmbeddedPythonEnvLoadListener;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,11 @@ public class ExpandListenerInitialization implements InitializingBean, Applicati
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        AppStartBannerLoadListener appStartBannerLoadListener = new AppStartBannerLoadListener();
-        appStartBannerLoadListener.setSpringApplicationContext(applicationContext);
-        terminalProcessListenerManager.registerListener(appStartBannerLoadListener);
+        AppBasicLoadListener appBasicLoadListener = new AppBasicLoadListener();
+        appBasicLoadListener.setSpringApplicationContext(applicationContext);
+        // APP 基础信息
+        terminalProcessListenerManager.registerListener(appBasicLoadListener);
+        // 测试
         terminalProcessListenerManager.registerListener(new TestLocalListener());
 //        terminalProcessListenerManager.registerListener(new WindowsEmbeddedPythonEnvLoadListener());
     }

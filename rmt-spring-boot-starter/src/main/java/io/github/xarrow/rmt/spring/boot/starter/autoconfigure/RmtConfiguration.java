@@ -34,7 +34,7 @@ public class RmtConfiguration {
      *
      * @return
      */
-    @Bean
+    @Bean(value = "terminalProcessLifecycle")
     @Scope("prototype")
     public TerminalProcessLifecycle terminalProcessLifecycle() {
         return new TerminalWsSessionProcessLifecycle();
@@ -53,7 +53,7 @@ public class RmtConfiguration {
     }
 
     // sessionManager
-    @Bean
+    @Bean(value = "terminalSessionManager")
     public TerminalSessionManager terminalSessionManager() {
         return new DefaultTerminalSessionManager();
     }

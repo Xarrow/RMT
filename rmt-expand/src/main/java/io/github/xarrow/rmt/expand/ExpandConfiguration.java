@@ -1,7 +1,7 @@
 package io.github.xarrow.rmt.expand;
 
 import io.github.xarrow.rmt.api.listener.TerminalProcessListener;
-import io.github.xarrow.rmt.expand.listener.AppStartBannerLoadListener;
+import io.github.xarrow.rmt.expand.listener.AppBasicLoadListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +16,6 @@ import org.springframework.context.annotation.Configuration;
 public class ExpandConfiguration {
     @Bean
     public TerminalProcessListener appStartBannerLoadListener() {
-        return new AppStartBannerLoadListener();
+        return new AppBasicLoadListener();
     }
 }

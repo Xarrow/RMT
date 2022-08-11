@@ -16,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import io.github.xarrow.rmt.api.listener.TerminalProcessListener;
 import io.github.xarrow.rmt.api.protocol.TerminalMessage;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.socket.TextMessage;
@@ -34,7 +31,7 @@ import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.Messag
  * @Desc: 启动加载 banner
  */
 @Slf4j
-public class AppStartBannerLoadListener implements TerminalProcessListener {
+public class AppBasicLoadListener implements TerminalProcessListener {
     private static final String NEXT_SYMBOL = "\u001B[?25l\n";
     private ApplicationContext context;
 

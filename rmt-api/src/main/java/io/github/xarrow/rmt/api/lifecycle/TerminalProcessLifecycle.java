@@ -16,23 +16,20 @@ public interface TerminalProcessLifecycle {
     void terminalConnection(WebSocketSession session);
 
     // ready
-    void terminalReady(final TerminalMessage terminalMessage) throws IOException, InterruptedException;
+    void terminalReady(WebSocketSession session, TerminalMessage terminalMessage) throws IOException, InterruptedException;
 
     // init
-    void terminalInit(final TerminalMessage terminalMessage) throws IOException, InterruptedException;
+    void terminalInit(WebSocketSession session, TerminalMessage terminalMessage) throws IOException, InterruptedException;
 
     // resize
-    void terminalResize(final TerminalMessage terminalMessage) throws IOException;
+    void terminalResize(WebSocketSession session, TerminalMessage terminalMessage) throws IOException;
 
     // command
-    void terminalCommand(final TerminalMessage terminalMessage) throws IOException, InterruptedException;
+    void terminalCommand(WebSocketSession session, TerminalMessage terminalMessage) throws IOException, InterruptedException;
 
     // close
-    void terminalClose(final TerminalMessage terminalMessage);
+    void terminalClose(WebSocketSession session, TerminalMessage terminalMessage);
 
-    @Deprecated
-    void setWebSocketSession(WebSocketSession session);
-
-    void terminalHeartbeat(final TerminalMessage terminalMessage);
+    void terminalHeartbeat(WebSocketSession session, TerminalMessage terminalMessage);
 
 }

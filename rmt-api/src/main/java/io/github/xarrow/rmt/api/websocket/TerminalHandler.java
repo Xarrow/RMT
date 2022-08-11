@@ -22,24 +22,40 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Slf4j
 public class TerminalHandler extends TextWebSocketHandler {
     private TerminalProcessLifecycle terminalProcessLifecycle;
+
     private TerminalSessionManager terminalSessionManager;
 
+    /**
+     * @param terminalProcessLifecycle
+     * @See io.github.xarrow.rmt.spring.boot.starter.autoconfigure.RmtConfiguration#terminalProcessLifecycle()
+     */
     @Autowired
     public void setTerminalProcessLifecycle(TerminalProcessLifecycle terminalProcessLifecycle) {
         this.terminalProcessLifecycle = terminalProcessLifecycle;
     }
 
+    /**
+     * @param terminalSessionManager
+     * @See io.github.xarrow.rmt.spring.boot.starter.autoconfigure.RmtConfiguration#terminalSessionManager()
+     */
     @Autowired
     public void setTerminalSessionManager(TerminalSessionManager terminalSessionManager) {
         this.terminalSessionManager = terminalSessionManager;
     }
 
+    /**
+     * 建立连接
+     *
+     * @param session
+     */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        log.info(MessageFormat
-            .format("[afterConnectionEstablished] Session={0} closing ,isOpen={1}", session.getId(), session.isOpen()));
+        log.debug(MessageFormat
+                .format("[afterConnectionEstablished] Session={0} closing ,isOpen={1}", session.getId(), session.isOpen()));
         //terminalProcessLifecycle.setWebSocketSession(session);
+        // 建立连接
         terminalProcessLifecycle.terminalConnection(session);
+        // 注册连接
         terminalSessionManager.registerSession(new SessionWrapper() {
             @Override
             public WebSocketSession webSocketSession() {
@@ -48,40 +64,52 @@ public class TerminalHandler extends TextWebSocketHandler {
         });
     }
 
-    // TERMINAL_READY
-    // TERMINAL_INIT
-    // TERMINAL_RESIZE
-    // TERMINAL_COMMAND
-    // TERMINAL_CLOSE
+    /**
+     * 处理 Session ，按文本方式处理
+     * TERMINAL_READY
+     * TERMINAL_INIT
+     * TERMINAL_RESIZE
+     * TERMINAL_COMMAND
+     * TERMINAL_CLOSE
+     *
+     * @param session
+     * @param message
+     * @throws Exception
+     */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info(MessageFormat
-            .format("[handleTextMessage] Session={0} closing ,isOpen={1}", session.getId(), session.isOpen()));
+        log.debug(MessageFormat
+                .format("[handleTextMessage] Session={0} closing ,isOpen={1}", session.getId(), session.isOpen()));
 
         if (!session.isOpen()) {
+            log.error(MessageFormat
+                    .format("[handleTextMessage] Session={0} isOpen={1}", session.getId(), session.isOpen()));
             return;
         }
+        // 请求
         TerminalRQ terminalRQ = new TerminalRQ().toTerminalRQ(message);
         switch (terminalRQ.getType()) {
             case TERMINAL_READY:
-                terminalProcessLifecycle.terminalReady(terminalRQ);
+                terminalProcessLifecycle.terminalReady(session, terminalRQ);
                 break;
             case TERMINAL_INIT:
-                terminalProcessLifecycle.terminalInit(terminalRQ);
+                terminalProcessLifecycle.terminalInit(session, terminalRQ);
                 break;
             case TERMINAL_RESIZE:
-                terminalProcessLifecycle.terminalResize(terminalRQ);
+                terminalProcessLifecycle.terminalResize(session, terminalRQ);
                 break;
             case TERMINAL_COMMAND:
-                terminalProcessLifecycle.terminalCommand(terminalRQ);
+                terminalProcessLifecycle.terminalCommand(session, terminalRQ);
                 break;
             case TERMINAL_HEARTBEAT:
-                terminalProcessLifecycle.terminalHeartbeat(terminalRQ);
+                terminalProcessLifecycle.terminalHeartbeat(session, terminalRQ);
                 break;
             case TERMINAL_CLOSE:
-                terminalProcessLifecycle.terminalClose(terminalRQ);
+                terminalProcessLifecycle.terminalClose(session, terminalRQ);
                 break;
             default:
+                log.error(MessageFormat
+                        .format("[handleTextMessage] Session={0}  unknown message type", session.getId()));
                 break;
         }
 
@@ -96,9 +124,9 @@ public class TerminalHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         // do nothing
         log.info(MessageFormat
-            .format("[afterConnectionClosed] Session={0} closing ,isOpen={1}, status={2}", session.getId(),
-                session.isOpen(), status));
-        terminalProcessLifecycle.terminalClose(null);
+                .format("[afterConnectionClosed] Session={0} closing ,isOpen={1}, status={2}", session.getId(),
+                        session.isOpen(), status));
+        terminalProcessLifecycle.terminalClose(session, null);
         session.close();
         terminalSessionManager.removeSession(new SessionWrapper() {
             @Override

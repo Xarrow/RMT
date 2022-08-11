@@ -11,6 +11,7 @@ import java.util.Map;
 import com.pty4j.PtyProcess;
 import com.pty4j.WinSize;
 import com.sun.jna.Platform;
+import io.github.xarrow.rmt.api.PtyProcessPool;
 import io.github.xarrow.rmt.api.session.TerminalSession2ProcessManager;
 import lombok.extern.slf4j.Slf4j;
 import io.github.xarrow.rmt.api.lifecycle.AbstractTerminalProcessLifecycle;
@@ -43,29 +44,29 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
     }
 
     @Override
-    public void terminalReady(final TerminalMessage message) throws IOException {
+    public void terminalReady(WebSocketSession session, final TerminalMessage message) throws IOException {
         doInit();
     }
 
     @Override
-    public void terminalInit(final TerminalMessage message) throws IOException {
+    public void terminalInit(WebSocketSession session, final TerminalMessage message) throws IOException {
         doInit();
     }
 
     @Override
-    public void terminalResize(final TerminalMessage message) throws IOException {
+    public void terminalResize(WebSocketSession session, final TerminalMessage message) throws IOException {
         if (!init) {
             doInit();
         }
-        int columns = ((TerminalRQ)message).getCols();
+        int columns = ((TerminalRQ) message).getCols();
         //compatible
         if (columns < 1) {
-            columns = ((TerminalRQ)message).getColumns();
+            columns = ((TerminalRQ) message).getColumns();
         }
         if (columns > 0) {
             this.columns = columns;
         }
-        int rows = ((TerminalRQ)message).getRows();
+        int rows = ((TerminalRQ) message).getRows();
         if (rows > 0) {
             this.rows = rows;
         }
@@ -73,38 +74,42 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
     }
 
     @Override
-    public void terminalCommand(final TerminalMessage message) throws InterruptedException, IOException {
+    public void terminalCommand(WebSocketSession session, final TerminalMessage message) throws InterruptedException, IOException {
         if (!init) {
             doInit();
         }
-        String command = ((TerminalRQ)message).getCommand();
+        String command = ((TerminalRQ) message).getCommand();
         doBeforeCommandListener(message);
+        // 加入队列
         terminalMessageQueue.putMessage(command);
 
         writeHandlerThreadPool.submit(
-            new BufferedWriteThread()
-                .setCommand(terminalMessageQueue.pollMessage())
-                .setManager(terminalProcessListenerManager)
-                .setBufferedWriter(this.stdout)
+                new BufferedWriteThread()
+                        .setCommand(terminalMessageQueue.pollMessage())
+                        .setManager(terminalProcessListenerManager)
+                        .setBufferedWriter(this.stdout)
         );
     }
 
     @Override
-    public void terminalHeartbeat(TerminalMessage terminalMessage) {
+    public void terminalHeartbeat(WebSocketSession session, TerminalMessage terminalMessage) {
         heartbeatHandlerThreadPool.submit(
-            new HeartbeatBufferedReaderThread()
-                .setManager(terminalProcessListenerManager)
-                .setWebSocketSession(webSocketSession));
+                new HeartbeatBufferedReaderThread()
+                        .setManager(terminalProcessListenerManager)
+                        .setWebSocketSession(webSocketSession));
     }
 
     @Override
-    public void terminalClose(final TerminalMessage message) {
+    public void terminalClose(WebSocketSession session, final TerminalMessage message) {
         if (null == this.ptyProcess || !this.ptyProcess.isAlive()) {
             return;
         }
         this.ptyProcess.destroy();
+//        pool.release(this.ptyProcess);
         doCloseListener(message);
     }
+
+    private static final PtyProcessPool pool = new PtyProcessPool(7);
 
     @Override
     protected void doInit() throws IOException {
@@ -131,28 +136,30 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
         }};
         this.ptyProcess = PtyProcess.exec(command, envs, userHome);
 
+//        this.ptyProcess = pool.fetch(7000);
         this.stderr = new BufferedReader(new InputStreamReader(this.ptyProcess.getErrorStream()));
         this.stdin = new BufferedReader(new InputStreamReader(this.ptyProcess.getInputStream()));
         this.stdout = new BufferedWriter(new OutputStreamWriter(this.ptyProcess.getOutputStream()));
+
         this.init = true;
         // after init
         doAfterInitListener(null);
 
         // always with session
         errorHandlerThreadPool.submit(
-            new BufferedReaderThread()
-                .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
-                .setManager(terminalProcessListenerManager)
-                .setBufferedReader(this.stderr)
-                .setWebSocketSession(webSocketSession));
+                new BufferedReaderThread()
+                        .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
+                        .setManager(terminalProcessListenerManager)
+                        .setBufferedReader(this.stderr)
+                        .setWebSocketSession(webSocketSession));
         readerHandlerThreadPool.submit(
-            new BufferedReaderThread()
-                .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
-                .setManager(terminalProcessListenerManager)
-                .setBufferedReader(this.stdin)
-                .setWebSocketSession(webSocketSession));
+                new BufferedReaderThread()
+                        .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
+                        .setManager(terminalProcessListenerManager)
+                        .setBufferedReader(this.stdin)
+                        .setWebSocketSession(webSocketSession));
 
-        // life cycle listener
+        // lifecycle listener
         doLifeCycleListener(this);
         // session2Process bind
         doTerminalSession2ProcessBind();
