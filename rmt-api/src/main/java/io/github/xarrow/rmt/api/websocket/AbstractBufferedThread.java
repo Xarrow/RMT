@@ -1,6 +1,7 @@
 package io.github.xarrow.rmt.api.websocket;
 
 import io.github.xarrow.rmt.api.listener.TerminalProcessListenerManager;
+import lombok.SneakyThrows;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.BufferedReader;
@@ -39,22 +40,20 @@ public abstract class AbstractBufferedThread extends Thread {
         return this;
     }
 
+    @SneakyThrows
     protected void sendToClient(final TerminalRS terminalRS) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 manager.listenerMap().forEach(
-                    (key, value) -> value
-                        .responseFromPty(terminalRS.getText().getBytes(StandardCharsets.UTF_8), webSocketSession));
+                        (key, value) -> value
+                                .responseFromPty(terminalRS.getText().getBytes(StandardCharsets.UTF_8), webSocketSession));
             }
         }).start();
+
         // browser refresh and close session
         if (webSocketSession.isOpen()) {
-            try {
-                webSocketSession.sendMessage(terminalRS.toTextMessage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            webSocketSession.sendMessage(terminalRS.toTextMessage());
         }
     }
 }

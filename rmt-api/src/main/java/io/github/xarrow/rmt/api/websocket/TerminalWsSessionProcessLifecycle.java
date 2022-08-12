@@ -105,7 +105,6 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
             return;
         }
         this.ptyProcess.destroy();
-//        pool.release(this.ptyProcess);
         doCloseListener(message);
     }
 
@@ -136,7 +135,6 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
         }};
         this.ptyProcess = PtyProcess.exec(command, envs, userHome);
 
-//        this.ptyProcess = pool.fetch(7000);
         this.stderr = new BufferedReader(new InputStreamReader(this.ptyProcess.getErrorStream()));
         this.stdin = new BufferedReader(new InputStreamReader(this.ptyProcess.getInputStream()));
         this.stdout = new BufferedWriter(new OutputStreamWriter(this.ptyProcess.getOutputStream()));

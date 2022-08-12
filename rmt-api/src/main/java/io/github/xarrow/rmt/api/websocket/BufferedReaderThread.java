@@ -3,6 +3,7 @@ package io.github.xarrow.rmt.api.websocket;
 import java.io.BufferedReader;
 
 import io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure;
+import lombok.SneakyThrows;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -25,19 +26,16 @@ public class BufferedReaderThread extends AbstractBufferedThread {
         printReader(bufferedReader);
     }
 
+    @SneakyThrows
     private void printReader(BufferedReader bufferedReader) {
-        try {
-            int nRead;
-            int defaultSendLength = 2 * 1024;
-            char[] data = new char[defaultSendLength];
-            while ((nRead = bufferedReader.read(data, 0, data.length)) != -1) {
-                TerminalRS terminalRS = new TerminalRS();
-                terminalRS.setText(String.valueOf(data, 0, nRead));
-                terminalRS.setType(this.messageType);
-                sendToClient(terminalRS);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        int nRead;
+        int defaultSendLength = 2 * 1024;
+        char[] data = new char[defaultSendLength];
+        while (/*bufferedReader.ready() &&*/ (nRead = bufferedReader.read(data, 0, data.length)) != -1) {
+            TerminalRS terminalRS = new TerminalRS();
+            terminalRS.setText(String.valueOf(data, 0, nRead));
+            terminalRS.setType(this.messageType);
+            sendToClient(terminalRS);
         }
     }
 

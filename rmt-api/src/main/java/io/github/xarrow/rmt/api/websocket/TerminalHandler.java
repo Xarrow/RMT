@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 import io.github.xarrow.rmt.api.lifecycle.TerminalProcessLifecycle;
 import io.github.xarrow.rmt.api.session.SessionWrapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import io.github.xarrow.rmt.api.session.TerminalSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,30 +89,37 @@ public class TerminalHandler extends TextWebSocketHandler {
         }
         // 请求
         TerminalRQ terminalRQ = new TerminalRQ().toTerminalRQ(message);
-        switch (terminalRQ.getType()) {
-            case TERMINAL_READY:
-                terminalProcessLifecycle.terminalReady(session, terminalRQ);
-                break;
-            case TERMINAL_INIT:
-                terminalProcessLifecycle.terminalInit(session, terminalRQ);
-                break;
-            case TERMINAL_RESIZE:
-                terminalProcessLifecycle.terminalResize(session, terminalRQ);
-                break;
-            case TERMINAL_COMMAND:
-                terminalProcessLifecycle.terminalCommand(session, terminalRQ);
-                break;
-            case TERMINAL_HEARTBEAT:
-                terminalProcessLifecycle.terminalHeartbeat(session, terminalRQ);
-                break;
-            case TERMINAL_CLOSE:
-                terminalProcessLifecycle.terminalClose(session, terminalRQ);
-                break;
-            default:
-                log.error(MessageFormat
-                        .format("[handleTextMessage] Session={0}  unknown message type", session.getId()));
-                break;
-        }
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                switch (terminalRQ.getType()) {
+                    case TERMINAL_READY:
+                        terminalProcessLifecycle.terminalReady(session, terminalRQ);
+                        break;
+                    case TERMINAL_INIT:
+                        terminalProcessLifecycle.terminalInit(session, terminalRQ);
+                        break;
+                    case TERMINAL_RESIZE:
+                        terminalProcessLifecycle.terminalResize(session, terminalRQ);
+                        break;
+                    case TERMINAL_COMMAND:
+                        terminalProcessLifecycle.terminalCommand(session, terminalRQ);
+                        break;
+                    case TERMINAL_HEARTBEAT:
+                        terminalProcessLifecycle.terminalHeartbeat(session, terminalRQ);
+                        break;
+                    case TERMINAL_CLOSE:
+                        terminalProcessLifecycle.terminalClose(session, terminalRQ);
+                        break;
+                    default:
+                        log.error(MessageFormat
+                                .format("[handleTextMessage] Session={0}  unknown message type", session.getId()));
+                        break;
+                }
+            }
+        }).start();
+
 
     }
 

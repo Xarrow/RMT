@@ -9,8 +9,6 @@ import io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure;
  * @Desc:
  */
 public class HeartbeatBufferedReaderThread extends AbstractBufferedThread {
-    //webSocketSession
-    //TerminalProcessListenerManager
 
     @Override
     public void run() {
