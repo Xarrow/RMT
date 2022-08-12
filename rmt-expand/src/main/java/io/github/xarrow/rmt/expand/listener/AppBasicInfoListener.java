@@ -31,7 +31,7 @@ import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.Messag
  * @Desc: 启动加载 banner
  */
 @Slf4j
-public class AppBasicLoadListener implements TerminalProcessListener {
+public class AppBasicInfoListener implements TerminalProcessListener {
     private static final String NEXT_SYMBOL = "\u001B[?25l\n";
     private ApplicationContext context;
 
@@ -92,37 +92,7 @@ public class AppBasicLoadListener implements TerminalProcessListener {
                           PtyProcess ptyProcess, BufferedWriter stdout, BufferedReader stdin,
                           BufferedReader stderr) {
         try {
-            org.springframework.core.io.Resource resource = new ClassPathResource("rmt.banner");
-            List<String> strings = IOUtils.readLines(resource.getInputStream(), "utf-8");
 
-            for (int i = 0; i < strings.size(); i++) {
-                String text = MessageFormat.format("\u001B[?25l\n {0} ", strings.get(i));
-                if (i == strings.size() - 1) {
-                    text = MessageFormat
-                            .format("\u001B[?25l\n {0} \u001B[?25l\n\u001B[?25l\n", strings.get(i));
-                }
-                String finalText = text;
-                HashMap<String, Object> hashMap = new HashMap<String, Object>() {
-                    {
-                        put("text", finalText);
-                        put("type", TERMINAL_PRINT);
-                    }
-                };
-                TextMessage textMessage = new TextMessage(new ObjectMapper().writeValueAsString(hashMap));
-                socketSession.sendMessage(textMessage);
-            }
-            String port = context.getEnvironment().getProperty("local.server.port");
-            String webPath = context.getEnvironment().getProperty("rmt.starter.web-path");
-            String tip = String.format("RMT started at:: http://127.0.0.1:%s/%s\n", port, webPath);
-            socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
-                put("text", tip);
-                put("type", TERMINAL_PRINT);
-            }})));
-
-            socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
-                put("text", "JVM INFO ============================================== \n");
-                put("type", TERMINAL_PRINT);
-            }})));
             socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
                 put("text", app());
                 put("type", TERMINAL_PRINT);

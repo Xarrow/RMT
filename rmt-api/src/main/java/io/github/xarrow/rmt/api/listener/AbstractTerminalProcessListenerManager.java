@@ -12,6 +12,11 @@ import java.util.Map;
 public abstract class AbstractTerminalProcessListenerManager implements TerminalProcessListenerManager {
     private final Map<String, TerminalProcessListener> listenerMap = new LinkedHashMap<>();
 
+    /**
+     * 注册 terminalListener
+     *
+     * @param listener
+     */
     public void registerListener(final TerminalProcessListener listener) {
         //default
         if (listener.getOrder() == 0) {
