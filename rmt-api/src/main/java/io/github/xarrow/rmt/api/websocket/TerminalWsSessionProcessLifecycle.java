@@ -11,7 +11,6 @@ import java.util.Map;
 import com.pty4j.PtyProcess;
 import com.pty4j.WinSize;
 import com.sun.jna.Platform;
-import io.github.xarrow.rmt.api.PtyProcessPool;
 import io.github.xarrow.rmt.api.session.TerminalSession2ProcessManager;
 import lombok.extern.slf4j.Slf4j;
 import io.github.xarrow.rmt.api.lifecycle.AbstractTerminalProcessLifecycle;
@@ -82,21 +81,13 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
         doBeforeCommandListener(message);
         // 加入队列
         terminalMessageQueue.putMessage(command);
-
-        writeHandlerThreadPool.submit(
-                new BufferedWriteThread()
-                        .setCommand(terminalMessageQueue.pollMessage())
-                        .setManager(terminalProcessListenerManager)
-                        .setBufferedWriter(this.stdout)
-        );
+        // 处理请求
+        writeHandlerThreadPool.submit(new BufferedWriteThread().setCommand(terminalMessageQueue.pollMessage()).setTerminalProcessListenerManager(terminalProcessListenerManager).setBufferedWriter(this.stdout));
     }
 
     @Override
     public void terminalHeartbeat(WebSocketSession session, TerminalMessage terminalMessage) {
-        heartbeatHandlerThreadPool.submit(
-                new HeartbeatBufferedReaderThread()
-                        .setManager(terminalProcessListenerManager)
-                        .setWebSocketSession(webSocketSession));
+        heartbeatHandlerThreadPool.submit(new HeartbeatBufferedReaderThread().setTerminalProcessListenerManager(terminalProcessListenerManager).setWebSocketSession(webSocketSession));
     }
 
     @Override
@@ -108,7 +99,6 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
         doCloseListener(message);
     }
 
-    private static final PtyProcessPool pool = new PtyProcessPool(7);
 
     @Override
     protected void doInit() throws IOException {
@@ -144,18 +134,8 @@ public class TerminalWsSessionProcessLifecycle extends AbstractTerminalProcessLi
         doAfterInitListener(null);
 
         // always with session
-        errorHandlerThreadPool.submit(
-                new BufferedReaderThread()
-                        .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
-                        .setManager(terminalProcessListenerManager)
-                        .setBufferedReader(this.stderr)
-                        .setWebSocketSession(webSocketSession));
-        readerHandlerThreadPool.submit(
-                new BufferedReaderThread()
-                        .setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT)
-                        .setManager(terminalProcessListenerManager)
-                        .setBufferedReader(this.stdin)
-                        .setWebSocketSession(webSocketSession));
+        errorHandlerThreadPool.submit(new BufferedReaderThread().setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT).setTerminalProcessListenerManager(terminalProcessListenerManager).setBufferedReader(this.stderr).setWebSocketSession(webSocketSession));
+        readerHandlerThreadPool.submit(new BufferedReaderThread().setMessageType(AbstractTerminalStructure.MessageType.TERMINAL_PRINT).setTerminalProcessListenerManager(terminalProcessListenerManager).setBufferedReader(this.stdin).setWebSocketSession(webSocketSession));
 
         // lifecycle listener
         doLifeCycleListener(this);

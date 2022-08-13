@@ -15,13 +15,13 @@ import java.nio.charset.StandardCharsets;
  * @Desc:
  */
 public abstract class AbstractBufferedThread extends Thread {
-    protected TerminalProcessListenerManager manager;
+    protected TerminalProcessListenerManager terminalProcessListenerManager;
     protected WebSocketSession webSocketSession;
     protected BufferedReader bufferedReader;
     protected BufferedWriter bufferedWriter;
 
-    public AbstractBufferedThread setManager(TerminalProcessListenerManager manager) {
-        this.manager = manager;
+    public AbstractBufferedThread setTerminalProcessListenerManager(TerminalProcessListenerManager terminalProcessListenerManager) {
+        this.terminalProcessListenerManager = terminalProcessListenerManager;
         return this;
     }
 
@@ -45,7 +45,7 @@ public abstract class AbstractBufferedThread extends Thread {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                manager.listenerMap().forEach(
+                terminalProcessListenerManager.listenerMap().forEach(
                         (key, value) -> value
                                 .responseFromPty(terminalRS.getText().getBytes(StandardCharsets.UTF_8), webSocketSession));
             }
