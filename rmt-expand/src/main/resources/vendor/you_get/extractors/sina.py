@@ -3,7 +3,6 @@
 __all__ = ['sina_download', 'sina_download_by_vid', 'sina_download_by_vkey']
 
 from ..common import *
-from ..util.log import *
 
 from hashlib import md5
 from random import randint

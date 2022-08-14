@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import getopt
-import os
 import platform
 import sys
 from .version import script_name, __version__

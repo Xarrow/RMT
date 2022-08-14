@@ -3,7 +3,6 @@
 
 from ..common import *
 from ..extractor import VideoExtractor
-from ..util.log import *
 
 from json import loads
 

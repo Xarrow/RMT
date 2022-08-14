@@ -3,7 +3,6 @@
 __all__ = ['showroom_download']
 
 from ..common import *
-import urllib.error
 from json import loads
 from time import time, sleep
 

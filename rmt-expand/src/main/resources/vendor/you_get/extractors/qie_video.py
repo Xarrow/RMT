@@ -1,6 +1,5 @@
 from ..common import *
 from ..extractor import VideoExtractor
-from ..util.log import *
 
 import json
 import math

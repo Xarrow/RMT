@@ -20,10 +20,8 @@ def coub_download(url, output_dir='.', merge=True, info_only=False, **kwargs):
         if not info_only:
             try:
                 fix_coub_video_file(video_file_path)
-                audio_duration = float(
-                  ffmpeg.ffprobe_get_media_duration(audio_file_path))
-                video_duration = float(
-                  ffmpeg.ffprobe_get_media_duration(video_file_path))
+                audio_duration = float(ffmpeg.ffprobe_get_media_duration(audio_file_path))
+                video_duration = float(ffmpeg.ffprobe_get_media_duration(video_file_path))
                 loop_file_path = get_loop_file_path(title, output_dir)
                 single_file_path = audio_file_path
                 if audio_duration > video_duration:

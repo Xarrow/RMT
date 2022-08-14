@@ -2,9 +2,7 @@ import re
 import json
 
 from ..common import *
-from ..extractors import VideoExtractor
 from ..util import log
-from ..util.strings import unescape_html
 
 __all__ = ['qq_egame_download']
 

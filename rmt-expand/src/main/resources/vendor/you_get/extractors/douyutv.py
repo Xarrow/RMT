@@ -3,7 +3,6 @@
 __all__ = ['douyutv_download']
 
 from ..common import *
-from ..util.log import *
 import json
 import hashlib
 import time

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from .common import match1, maybe_print, download_urls, get_filename, parse_host, set_proxy, unset_proxy, get_content, dry_run, player
+from .common import maybe_print, download_urls, get_filename, parse_host, set_proxy, unset_proxy, dry_run, player
 from .common import print_more_compatible as print
 from .util import log
 from . import json_output
@@ -238,7 +238,8 @@ class VideoExtractor():
             download_urls(urls, self.title, ext, total_size, headers=headers,
                           output_dir=kwargs['output_dir'],
                           merge=kwargs['merge'],
-                          av=stream_id in self.dash_streams)
+                          av=stream_id in self.dash_streams,
+                          vid=self.vid)
 
             if 'caption' not in kwargs or not kwargs['caption']:
                 print('Skipping captions or danmaku.')
