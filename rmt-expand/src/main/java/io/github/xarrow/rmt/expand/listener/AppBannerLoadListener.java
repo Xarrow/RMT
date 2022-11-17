@@ -6,6 +6,8 @@ import io.github.xarrow.rmt.api.listener.TerminalProcessListener;
 import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,9 +25,11 @@ import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.Messag
  * @Time:2022/8/11
  * @Site: http://iliangqunru.bitcron.com/
  */
-public class AppBannerLoadListener implements TerminalProcessListener {
+public class AppBannerLoadListener implements TerminalProcessListener, EnvironmentAware {
 
     private ApplicationContext context;
+
+    private Environment environment;
 
     public void setSpringApplicationContext(ApplicationContext context) {
         this.context = context;
@@ -66,8 +70,20 @@ public class AppBannerLoadListener implements TerminalProcessListener {
                 put("type", TERMINAL_PRINT);
             }})));
 
+            //env
+            String env = String.format("Current env is::%s", environment.getProperty("env"));
+            socketSession.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
+                put("text", env);
+                put("type", TERMINAL_PRINT);
+            }})));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 }

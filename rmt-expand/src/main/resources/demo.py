@@ -14,7 +14,7 @@ sys.path.append(VENDOR_DIR)
 print(VENDOR_DIR)
 
 import requests
-print(requests.get(url='https://twitter.com').text)
+print(requests.get(url='https://baidu.com').text)
 
 # import you_get
 # print(dir(you_get))
