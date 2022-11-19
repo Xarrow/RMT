@@ -12,8 +12,6 @@ import static io.github.xarrow.rmt.commons.RmtCommons.DEFAULT_WEB_PATH;
 @Accessors(chain = true)
 @Data
 public class RmtStarterProperties extends RmtClientProperties {
-
-
     /**
      * 二级目录
      */
