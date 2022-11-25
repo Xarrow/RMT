@@ -15,4 +15,35 @@ public final class TerminalUtils {
     public static boolean isLinux() {
         return !isWindows();
     }
+
+    public static String transformToWindowsPathForCheck(String windowsFilePath) {
+        return windowsFilePath.replace("file:///", "")
+                .replace("file:", "")
+                .replace("/", "\\");
+    }
+
+    public static String deduceStaticWebPattern(String webPattern) {
+        webPattern = webPattern.startsWith("/") ? webPattern : "/" + webPattern;
+        webPattern = webPattern.endsWith("/") ? webPattern : webPattern + "/";
+        webPattern += "**";
+        return webPattern;
+    }
+
+    public static String deduceStaticLocationPath(String locationPath) {
+        if (isWindows()) {
+            if (!locationPath.startsWith("file:")) {
+                locationPath = locationPath.replace("file:", "");
+            }
+            locationPath = locationPath.replace("\\", "/");
+            if (!locationPath.endsWith("/")) {
+                locationPath = locationPath + "/";
+            }
+            return locationPath;
+        }
+        return locationPath;
+    }
+
+    public static String webPathFilter(String staticFileServiceViewPath) {
+        return staticFileServiceViewPath.startsWith("/") ? staticFileServiceViewPath : "/" + staticFileServiceViewPath;
+    }
 }

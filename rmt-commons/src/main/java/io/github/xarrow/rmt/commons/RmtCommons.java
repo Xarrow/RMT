@@ -6,9 +6,11 @@ package io.github.xarrow.rmt.commons;
  * @Site: https://github.com/xarrow
  */
 public interface RmtCommons {
-    String RMT_STARTER_ENABLE_PREFIX = "rmt.starter";
-    String ENABLE = "enable";
+    String RMT_PATH_TOP_PATH = "/rmt";
     String DEFAULT_WEB_PATH = "rmt";
     String DEFAULT_WEBSOCKET_PATH = "terminal";
+    String DEFAULT_STATIC_FILE_WEB_PATH = RMT_PATH_TOP_PATH + "/files";
+    String DEFAULT_STATIC_FILE_LOCATION = RMT_PATH_TOP_PATH + "/files";
+    String DEFAULT_STATIC_FILE_VIEW_PATH = RMT_PATH_TOP_PATH + "/static/view";
 
 }

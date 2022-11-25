@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:each="item : ${items}">
+    <div>
+        <a th:href="${item.uri}" target='_blank'>
+            <th:block th:text="${item.uri}"></th:block>
+        </a>
+    </div>
+</th:block>
+</body>
+</html>
