@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -60,4 +62,12 @@ public class RmtStarterAutoConfiguration implements CommandLineRunner {
         return new RmtStaticFileService();
     }
 
+    @Bean
+    @Primary
+    public WebMvcProperties webMvcProperties() {
+        WebMvcProperties webMvcProperties = new WebMvcProperties();
+        webMvcProperties.getView().setPrefix("/");
+        webMvcProperties.getView().setSuffix(".html");
+        return webMvcProperties;
+    }
 }
