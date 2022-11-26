@@ -30,17 +30,15 @@ public final class TerminalUtils {
     }
 
     public static String deduceStaticLocationPath(String locationPath) {
-        if (isWindows()) {
-            if (!locationPath.startsWith("file:")) {
-                locationPath = locationPath.replace("file:", "");
-            }
-            locationPath = locationPath.replace("\\", "/");
-            if (!locationPath.endsWith("/")) {
-                locationPath = locationPath + "/";
-            }
-            return locationPath;
+        if (!locationPath.startsWith("file:")) {
+            locationPath = "file:" + locationPath;
+        }
+        locationPath = locationPath.replace("\\", "/");
+        if (!locationPath.endsWith("/")) {
+            locationPath = locationPath + "/";
         }
         return locationPath;
+
     }
 
     public static String webPathFilter(String staticFileServiceViewPath) {
