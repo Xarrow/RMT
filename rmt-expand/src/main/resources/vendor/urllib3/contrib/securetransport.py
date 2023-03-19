@@ -36,7 +36,6 @@ import ssl
 import threading
 import weakref
 
-from .. import util
 from ._securetransport.bindings import (
     Security, SecurityConst, CoreFoundation
 )
@@ -44,6 +43,7 @@ from ._securetransport.low_level import (
     _assert_no_error, _cert_array_from_pem, _temporary_keychain,
     _load_client_cert_chain
 )
+from .. import util
 
 try:  # Platform-specific: Python 2
     from socket import _fileobject

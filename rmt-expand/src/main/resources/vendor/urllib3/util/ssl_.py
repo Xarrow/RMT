@@ -1,15 +1,14 @@
 from __future__ import absolute_import
+
 import errno
-import warnings
 import hmac
 import socket
-
+import warnings
 from binascii import hexlify, unhexlify
 from hashlib import md5, sha1, sha256
 
 from ..exceptions import SSLError, InsecurePlatformWarning, SNIMissingWarning
 from ..packages import six
-
 
 SSLContext = None
 HAS_SNI = False

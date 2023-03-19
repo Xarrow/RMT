@@ -50,5 +50,9 @@
             <groupId>io.github.xarrow.rmt</groupId>
             <artifactId>rmt-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.xarrow.rmt</groupId>
+            <artifactId>rmt-expand</artifactId>
+        </dependency>
     </dependencies>
 </project>

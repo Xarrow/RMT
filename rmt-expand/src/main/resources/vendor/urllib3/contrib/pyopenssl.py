@@ -47,6 +47,7 @@ import OpenSSL.SSL
 from cryptography import x509
 from cryptography.hazmat.backends.openssl import backend as openssl_backend
 from cryptography.hazmat.backends.openssl.x509 import _Certificate
+
 try:
     from cryptography.x509 import UnsupportedExtension
 except ImportError:

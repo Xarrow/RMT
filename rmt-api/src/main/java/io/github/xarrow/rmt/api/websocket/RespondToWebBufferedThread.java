@@ -88,7 +88,7 @@ public class RespondToWebBufferedThread extends AbstractBufferedThread {
         }
     }
 
-    protected void sendToClient(TerminalRS terminalRS) throws IOException {
+    public void sendToClient(TerminalRS terminalRS) throws IOException {
         if (session.isOpen()) {
             session.sendMessage(terminalRS.toTextMessage());
         }

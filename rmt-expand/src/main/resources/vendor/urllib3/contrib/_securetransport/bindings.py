@@ -32,13 +32,12 @@ license and by oscrypto's:
 from __future__ import absolute_import
 
 import platform
-from ctypes.util import find_library
+from ctypes import CDLL, POINTER, CFUNCTYPE
 from ctypes import (
     c_void_p, c_int32, c_char_p, c_size_t, c_byte, c_uint32, c_ulong, c_long,
     c_bool
 )
-from ctypes import CDLL, POINTER, CFUNCTYPE
-
+from ctypes.util import find_library
 
 security_path = find_library('Security')
 if not security_path:

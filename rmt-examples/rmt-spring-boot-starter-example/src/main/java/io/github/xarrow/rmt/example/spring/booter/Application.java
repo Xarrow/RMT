@@ -15,13 +15,13 @@ import org.springframework.context.annotation.Import;
  * @Date: 9/25/2020.
  * @Desc:
  */
-@SpringBootApplication(scanBasePackages = "io.github.xarrow.rmt.example.spring.booter")
-@Import(ExpandListenerInitialization.class)
-@Slf4j
-public class Application {
-
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = new SpringApplication(Application.class).run(args);
-    }
-
-}
+//@SpringBootApplication(scanBasePackages = "io.github.xarrow.rmt.example.spring.booter")
+//@Import(ExpandListenerInitialization.class)
+//@Slf4j
+//public class Application {
+//
+//    public static void main(String[] args) {
+//        ConfigurableApplicationContext context = new SpringApplication(Application.class).run(args);
+//    }
+//
+//}

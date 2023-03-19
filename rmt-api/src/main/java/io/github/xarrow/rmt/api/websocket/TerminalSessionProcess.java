@@ -47,7 +47,6 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
      */
     @Override
     public void terminalConnection(WebSocketSession session) {
-        // todo register session connection
         // 1.  session create listener notify
         terminalProcessExtend.doSessionConnectListener(session);
     }

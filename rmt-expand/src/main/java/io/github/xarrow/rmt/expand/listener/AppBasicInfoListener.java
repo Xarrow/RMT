@@ -22,7 +22,7 @@
 //import org.springframework.web.socket.TextMessage;
 //import org.springframework.web.socket.WebSocketSession;
 //
-//import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.MessageType.TERMINAL_PRINT;
+//import static io.github.xarrow.rmt.api.websocket.MessageType.TERMINAL_PRINT;
 //
 ///**
 // * @Email: zhangjian12424@gmail.com .

@@ -2,7 +2,10 @@ package io.github.xarrow.rmt.api.websocket;
 
 import io.github.xarrow.rmt.api.lifecycle.TerminalProcess;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,12 +20,12 @@ import java.text.MessageFormat;
  * @Desc:
  */
 @Slf4j
-public class TerminalTextWebSocketHandler extends TextWebSocketHandler {
+public class TerminalTextWebSocketHandler extends TextWebSocketHandler implements ApplicationContextAware {
     private TerminalProcess terminalProcess;
 
-    @Autowired
-    public void setTerminalProcess(TerminalProcess terminalProcess) {
-        this.terminalProcess = terminalProcess;
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        terminalProcess = applicationContext.getBean(TerminalProcess.class);
     }
 
     /**
@@ -33,7 +36,6 @@ public class TerminalTextWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         log.debug(MessageFormat.format("[afterConnectionEstablished] Session={0} closing ,isOpen={1}", session.getId(), session.isOpen()));
-        // 建立连接
         terminalProcess.terminalConnection(session);
     }
 
@@ -90,5 +92,6 @@ public class TerminalTextWebSocketHandler extends TextWebSocketHandler {
         log.info(MessageFormat.format("[afterConnectionClosed] Session={0} closing ,isOpen={1}, status={2}", session.getId(), session.isOpen(), status));
         terminalProcess.terminalClose(session, null);
     }
+
 
 }
