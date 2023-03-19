@@ -44,4 +44,6 @@ public final class TerminalUtils {
     public static String webPathFilter(String staticFileServiceViewPath) {
         return staticFileServiceViewPath.startsWith("/") ? staticFileServiceViewPath : "/" + staticFileServiceViewPath;
     }
+
+
 }

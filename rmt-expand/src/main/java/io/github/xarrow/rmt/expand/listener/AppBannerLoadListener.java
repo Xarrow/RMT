@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -27,8 +28,8 @@ import static io.github.xarrow.rmt.api.websocket.MessageType.TERMINAL_PRINT;
  */
 public class AppBannerLoadListener implements TerminalProcessListener, EnvironmentAware, ApplicationContextAware {
     private ApplicationContext context;
-    private WebSocketSession session;
     private Environment environment;
+    private WebSocketSession session;
 
     @Override
     public void sessionConnect(WebSocketSession webSocketSession) {
@@ -48,14 +49,13 @@ public class AppBannerLoadListener implements TerminalProcessListener, Environme
     @Override
     public void beforeInit(TerminalMessage message) {
         try {
-            org.springframework.core.io.Resource resource = new ClassPathResource("rmt.banner");
+            Resource resource = new ClassPathResource("rmt.banner");
             List<String> strings = IOUtils.readLines(resource.getInputStream(), "utf-8");
 
             for (int i = 0; i < strings.size(); i++) {
                 String text = MessageFormat.format("\u001B[?25l\n {0} ", strings.get(i));
                 if (i == strings.size() - 1) {
-                    text = MessageFormat
-                            .format("\u001B[?25l\n {0} \u001B[?25l\n\u001B[?25l\n", strings.get(i));
+                    text = MessageFormat.format("\u001B[?25l\n {0} \u001B[?25l\n\u001B[?25l\n", strings.get(i));
                 }
                 String finalText = text;
                 HashMap<String, Object> hashMap = new HashMap<String, Object>() {

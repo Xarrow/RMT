@@ -31,7 +31,11 @@ public interface TerminalProcessListener extends TerminalListenerOrder {
     default void sessionConnect(WebSocketSession webSocketSession) {
     }
 
-    // 初始化之前
+    /**
+     * before init
+     *
+     * @param message
+     */
     default void beforeInit(TerminalMessage message) {
     }
 
