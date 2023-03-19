@@ -13,19 +13,19 @@ import com.orbitz.consul.KeyValueClient;
 import com.orbitz.consul.cache.KVCache;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration.RegCheck;
+import io.github.xarrow.rmt.api.session.TerminalContext;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import io.github.xarrow.rmt.api.session.AbstractTerminalSessionManager;
-import io.github.xarrow.rmt.api.session.SessionWrapper;
+import io.github.xarrow.rmt.api.session.AbstractTerminalContextManager;
 import org.springframework.web.socket.WebSocketSession;
 
 @Slf4j
-public class ConsulTerminalSessionManager extends AbstractTerminalSessionManager {
+public class ConsulTerminalContextManager extends AbstractTerminalContextManager {
     @SneakyThrows
     public static void main(String[] args) throws IOException {
-        ConsulTerminalSessionManager ctsm = new ConsulTerminalSessionManager();
+        ConsulTerminalContextManager ctsm = new ConsulTerminalContextManager();
 
         //  register a service
         String serviceId = "myServiceId";
@@ -52,7 +52,7 @@ public class ConsulTerminalSessionManager extends AbstractTerminalSessionManager
     private final KeyValueClient kvClient;
     private KVCache kvCache;
 
-    public ConsulTerminalSessionManager() {
+    public ConsulTerminalContextManager() {
         Consul.Builder builder = Consul.builder()
             .withHostAndPort(HostAndPort.fromParts(consulHost, consulPort)).withPing(true);
         client = builder.build();
@@ -61,8 +61,8 @@ public class ConsulTerminalSessionManager extends AbstractTerminalSessionManager
 
     @SneakyThrows
     @Override
-    public void registerSession(SessionWrapper sessionWrapper) {
-        WebSocketSession ws = sessionWrapper.webSocketSession();
+    public void registerSession(TerminalContext terminalContext) {
+        WebSocketSession ws = terminalContext.webSocketSession();
         InternalConsulWSValue internalConsulWSValue = new InternalConsulWSValue();
         internalConsulWSValue
             .setSessionId(ws.getId())
@@ -73,12 +73,12 @@ public class ConsulTerminalSessionManager extends AbstractTerminalSessionManager
 
         String s = new ObjectMapper().writeValueAsString(internalConsulWSValue);
         kvClient.putValue(ws.getId(), s);
-        super.registerSession(sessionWrapper);
+        super.registerSession(terminalContext);
     }
 
     @SneakyThrows
     @Override
-    public SessionWrapper getSession(String sessionId) {
+    public TerminalContext getSession(String sessionId) {
         String s = kvClient.getValueAsString(sessionId, Charsets.UTF_8).orElse(null);
         //if (s != null) {
         //    InternalConsulWSValue internalConsulWSValue = new ObjectMapper().readValue(s, InternalConsulWSValue

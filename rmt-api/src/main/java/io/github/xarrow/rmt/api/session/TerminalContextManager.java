@@ -9,49 +9,55 @@ import org.springframework.web.socket.WebSocketMessage;
 
 /**
  * @Email: zhangjian12424@gmail.com.
- * @Author: helicxs
+ * @Author: helixcs
  * @Date: 6/18/2020.
  * @Desc:
  */
-public interface TerminalSessionManager {
-    
+public interface TerminalContextManager {
+
     /**
-     * register session
+     * register sessionContext
      *
-     * @param SessionWrapper
+     * @param terminalContext
      */
-    void registerSession(final SessionWrapper SessionWrapper);
-    
+    void registerTerminalContext(TerminalContext terminalContext);
+
     /**
      * remove session
      *
-     * @param SessionWrapper
+     * @param TerminalContext
      */
-    void removeSession(final SessionWrapper SessionWrapper);
-    
-    SessionWrapper getSession(final String sessionId);
-    
+    void removeSession(TerminalContext TerminalContext);
+
+    /**
+     * get terminalContext by sessionId
+     *
+     * @param sessionId
+     * @return
+     */
+    TerminalContext getTerminalContext(String sessionId);
+
     /**
      * all sessions
      *
      * @return
      */
-    Map<String, SessionWrapper> sessionMap();
-    
+    Map<String, TerminalContext> allTerminalContextMap();
+
     /**
      * p2p send
      *
-     * @param SessionWrapper
+     * @param TerminalContext
      * @param terminalMessage
      * @param <T>
      * @throws IOException
      */
-    <T> void p2pSend(final SessionWrapper SessionWrapper, final TerminalMessage terminalMessage) throws IOException;
-    
+    <T> void p2pSend(TerminalContext TerminalContext, TerminalMessage terminalMessage) throws IOException;
+
     @Deprecated
-    <T> void p2pSend(final SessionWrapper SessionWrapper, final WebSocketMessage<T> webSocketMessage)
+    <T> void p2pSend(TerminalContext TerminalContext, WebSocketMessage<T> webSocketMessage)
             throws IOException;
-    
+
     /**
      * broadcast
      *
@@ -59,8 +65,8 @@ public interface TerminalSessionManager {
      * @param webSocketMessage
      * @param <T>
      */
-    <T> void broadCastSend(final Map<String, SessionWrapper> sessionMap, final WebSocketMessage<T> webSocketMessage);
-    
+    <T> void broadCastSend(Map<String, TerminalContext> sessionMap, WebSocketMessage<T> webSocketMessage);
+
     /**
      * filter send
      *
@@ -69,16 +75,17 @@ public interface TerminalSessionManager {
      * @param webSocketMessage
      * @param <T>
      */
-    <T> void filteredSend(final TagFilter messageFilter, final Map<String, SessionWrapper> sessionMap,
-            final WebSocketMessage<T> webSocketMessage);
-    
+    <T> void filteredSend(TagFilter messageFilter,
+                          Map<String, TerminalContext> sessionMap,
+                          WebSocketMessage<T> webSocketMessage);
+
     /**
      * listener session
      *
      * @param terminalSessionListener
      */
     default void addListener(TerminalSessionListener terminalSessionListener) {
-    
+
     }
-    
+
 }

@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * @Email: zhangjian12424@gmail.com.
- * @Author: helicxs
+ * @Author: helixcs
  * @Date: 6/19/2020.
  * @Desc:
  */
@@ -15,7 +15,7 @@ public interface TerminalProcessListenerManager {
 
     TerminalProcessListener findListener(final String name);
 
-    default Map<String, TerminalProcessListener> listenerMap() { return null; }
+    Map<String, TerminalProcessListener> allListenerMap();
 
-    default void sort() {}
+
 }

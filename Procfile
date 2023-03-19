@@ -1,1 +1,0 @@
-web: java -Dfile.encoding=UTF-8 -Dserver.port=$PORT -jar RELEASE/rmt-app.jar

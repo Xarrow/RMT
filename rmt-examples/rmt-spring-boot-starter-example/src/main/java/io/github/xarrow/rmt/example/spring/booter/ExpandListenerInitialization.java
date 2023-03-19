@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.Resource;
+
 /**
  * @Email: zhangjian12424@gmail.com .
  * @Author: helixcs
@@ -20,7 +22,7 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ExpandListenerInitialization implements InitializingBean, ApplicationContextAware {
 
-    @Autowired
+    @Resource
     private TerminalProcessListenerManager terminalProcessListenerManager;
 
     @Override

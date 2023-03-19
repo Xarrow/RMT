@@ -2,11 +2,13 @@ package io.github.xarrow.rmt.spring.boot.starter;
 
 import io.github.xarrow.rmt.api.client.RmtClientProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import static io.github.xarrow.rmt.commons.RmtCommons.*;
 
+@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "rmt.starter")
 @Accessors(chain = true)
 @Data

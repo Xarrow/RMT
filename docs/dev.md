@@ -72,7 +72,7 @@ Created: Jun 24, 2020 4:27 PM
     ```java
     // sessionManager
         @Bean
-        public TerminalSessionManager terminalSessionManager() {
+        public TerminalSessionManager terminalContextManager() {
             return new DefaultTerminalSessionManager();
         }
     ```
@@ -81,16 +81,16 @@ Created: Jun 24, 2020 4:27 PM
 
 ```java
 @Autowired
-private TerminalSessionManager terminalSessionManager;
+private TerminalSessionManager terminalContextManager;
 // 获取全部连接的 Session
-Map<String, SessionWrapper> sessions = terminalSessionManager.sessionMap()
+Map<String, TerminalContext> sessions = terminalContextManager.sessionMap()
 // 点对点发送消息给客户端
 TextMessage textMessage = new TextMessage(
                     new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
                         put("text", "\u001B[?25l\n Hello World");
                         put("type", TERMINAL_PRINT);
                     }}));
-terminalSessionManager.p2pSend(sessionWrapper, new TerminalMessage() {
+terminalContextManager.p2pSend(terminalContext, new TerminalMessage() {
                 @Override
                 public <T> WebSocketMessage<T> webSocketMessage() {
                     return (WebSocketMessage<T>) textMessage;
@@ -98,14 +98,14 @@ terminalSessionManager.p2pSend(sessionWrapper, new TerminalMessage() {
             });
 
 // 对全部客户端进行广播
-Map<String, SessionWrapper> sessionMap = terminalSessionManager.sessionMap();
+Map<String, TerminalContext> sessionMap = terminalContextManager.sessionMap();
 try {
             TextMessage textMessage = new TextMessage(
                     new ObjectMapper().writeValueAsString(new HashMap<String, Object>() {{
                         put("text", text);
                         put("type", TERMINAL_PRINT);
                     }}));
-            terminalSessionManager.broadCastSend(sessionMap, textMessage);
+            terminalContextManager.broadCastSend(sessionMap, textMessage);
         } catch (IOException e) {
             return "send failed," + e.getMessage();
  }

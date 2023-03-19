@@ -23,7 +23,7 @@ import static io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.Messag
 /**
  * @Author: helix
  * @Time:2022/8/11
- * @Site: http://iliangqunru.bitcron.com/
+ * @Site: https://github.com/xarrow
  */
 public class AppBannerLoadListener implements TerminalProcessListener, EnvironmentAware {
 

@@ -1,14 +1,12 @@
 package io.github.xarrow.rmt.api.session;
 
-import com.pty4j.PtyProcess;
-
 import java.io.*;
 
 public interface ProcessWrapper {
-    PtyProcess ptyProcess();
+    Process process();
 
     default OutputStream output() {
-        return ptyProcess().getOutputStream();
+        return process().getOutputStream();
     }
 
     default BufferedWriter write() {
@@ -17,7 +15,7 @@ public interface ProcessWrapper {
 
 
     default InputStream input() {
-        return ptyProcess().getInputStream();
+        return process().getInputStream();
     }
 
     default BufferedReader read() {
@@ -25,7 +23,7 @@ public interface ProcessWrapper {
     }
 
     default InputStream error() {
-        return ptyProcess().getErrorStream();
+        return process().getErrorStream();
     }
 
     default BufferedReader errorRead() {

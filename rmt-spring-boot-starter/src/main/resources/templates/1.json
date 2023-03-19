@@ -1,0 +1,24 @@
+:2016 {
+  reverse_proxy https://www.google.com {
+    header_up Accept-Language en-US
+    header_up Host "www.google.com"
+  }
+  filter {
+    content_type text/.*
+    search_pattern www.google.com
+    replacement 192.168.2.8:2016
+  }
+  filter {
+    content_type text/.*
+    search_pattern (www|ssl).gstatic.com
+    replacement 192.168.2.8:2017
+  }
+}
+
+:2017 {
+  gzip
+  proxy / https://www.gstatic.com {
+    header_upstream X-Real-IP {remote}
+    header_upstream User-Agent {>User-Agent}
+  }
+}

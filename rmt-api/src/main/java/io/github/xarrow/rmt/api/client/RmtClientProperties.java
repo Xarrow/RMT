@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @Author: helix
  * @Time:2022/7/30
- * @Site: http://iliangqunru.bitcron.com/
+ * @Site: https://github.com/xarrow
  */
 @Data
 public class RmtClientProperties {

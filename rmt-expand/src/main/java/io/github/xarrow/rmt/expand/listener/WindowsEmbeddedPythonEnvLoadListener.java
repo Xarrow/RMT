@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pty4j.PtyProcess;
-import io.github.xarrow.rmt.api.lifecycle.TerminalProcessLifecycle;
+import io.github.xarrow.rmt.api.lifecycle.TerminalProcess;
 import io.github.xarrow.rmt.api.listener.TerminalProcessListener;
 import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import io.github.xarrow.rmt.commons.TerminalUtils;
@@ -71,7 +71,7 @@ public class WindowsEmbeddedPythonEnvLoadListener implements TerminalProcessList
     }
 
     @Override
-    public void lifeCycleContext(TerminalProcessLifecycle terminalProcessLifecycle) {
+    public void lifeCycleContext(TerminalProcess terminalProcess) {
 
     }
 }

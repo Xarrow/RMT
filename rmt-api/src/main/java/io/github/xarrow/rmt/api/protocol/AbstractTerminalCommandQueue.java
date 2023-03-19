@@ -4,11 +4,11 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @Email: zhangjian12424@gmail.com.
- * @Author: helicxs
+ * @Author: helixcs
  * @Date: 6/19/2020.
  * @Desc:
  */
-public abstract class AbstractTerminalMessageQueue implements TerminalMessageQueue<String> {
+public abstract class AbstractTerminalCommandQueue implements TerminalCommandQueue<String> {
     private final LinkedBlockingDeque<String> messageQueue = new LinkedBlockingDeque<>();
 
     @Override

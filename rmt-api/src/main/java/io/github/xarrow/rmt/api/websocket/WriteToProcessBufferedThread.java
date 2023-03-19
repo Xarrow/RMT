@@ -2,21 +2,23 @@ package io.github.xarrow.rmt.api.websocket;
 
 import lombok.SneakyThrows;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
  * @Email: zhangjian12424@gmail.com.
- * @Author: helicxs
+ * @Author: helixcs
  * @Date: 6/18/2020.
  * @Desc:
  */
-public class BufferedWriteThread extends AbstractBufferedThread {
+public class WriteToProcessBufferedThread extends AbstractBufferedThread {
+    protected BufferedWriter bufferedWriter;
     private String command;
 
-    public BufferedWriteThread setCommand(String command) {
+    public WriteToProcessBufferedThread(BufferedWriter bufferedWriter, String command) {
+        this.bufferedWriter = bufferedWriter;
         this.command = command;
-        return this;
     }
 
     @SneakyThrows
@@ -26,13 +28,6 @@ public class BufferedWriteThread extends AbstractBufferedThread {
     }
 
     private void writeToPty() throws IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                terminalProcessListenerManager.listenerMap().values().forEach(
-                    x -> x.requestToPty(command.getBytes(StandardCharsets.UTF_8), bufferedWriter));
-            }
-        }).start();
         bufferedWriter.write(command);
         bufferedWriter.flush();
     }

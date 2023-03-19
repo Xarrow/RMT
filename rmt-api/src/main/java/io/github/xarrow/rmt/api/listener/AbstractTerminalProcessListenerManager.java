@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @Email: zhangjian12424@gmail.com.
- * @Author: helicxs
+ * @Author: helixcs
  * @Date: 6/19/2020.
  * @Desc:
  */
@@ -30,11 +30,6 @@ public abstract class AbstractTerminalProcessListenerManager implements Terminal
 
     public void removeListener(final String name) {
         listenerMap.remove(name);
-    }
-
-    @Override
-    public void sort() {
-        // do thing
     }
 
     @Override
