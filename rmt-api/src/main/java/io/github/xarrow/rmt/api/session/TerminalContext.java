@@ -8,5 +8,5 @@ import org.springframework.web.socket.WebSocketSession;
 public interface TerminalContext {
     WebSocketSession session();
 
-    ProcessWrapper process();
+    ProcessWrapper processWrapper();
 }

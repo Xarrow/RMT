@@ -1,6 +1,6 @@
 package io.github.xarrow.rmt.api.protocol;
 
-import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.web.socket.TextMessage;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -9,5 +9,5 @@ import org.springframework.web.socket.WebSocketMessage;
  * @Desc:
  */
 public interface TerminalMessage {
-    <T> WebSocketMessage<T> webSocketMessage();
+    TextMessage textMessage();
 }

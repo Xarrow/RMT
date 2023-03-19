@@ -2,10 +2,13 @@ package io.github.xarrow.rmt.spring.boot.starter.autoconfigure;
 
 import io.github.xarrow.rmt.spring.boot.starter.RmtStarterProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+import javax.annotation.Resource;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -15,15 +18,15 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  */
 @EnableWebSocket
 public class RmtWebSocketConfigurer implements WebSocketConfigurer {
-    @Autowired
-    private WebSocketHandler webSocketHandler;
-    @Autowired
+    @Resource
+    @Qualifier("terminalWebSocketHandler")
+    private WebSocketHandler terminalWebSocketHandler;
+    @Resource
     private RmtStarterProperties rmtStarterProperties;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(webSocketHandler, rmtStarterProperties.getWebsocketPath()).setAllowedOrigins("*");
+        webSocketHandlerRegistry.addHandler(terminalWebSocketHandler, rmtStarterProperties.getWebsocketPath()).setAllowedOrigins("*");
     }
-
 
 }

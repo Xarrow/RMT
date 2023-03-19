@@ -13,4 +13,6 @@ public interface RmtCommons {
     String DEFAULT_STATIC_FILE_LOCATION = RMT_PATH_TOP_PATH + "/files";
     String DEFAULT_STATIC_FILE_VIEW_PATH = RMT_PATH_TOP_PATH + "/static/view";
 
+
+
 }

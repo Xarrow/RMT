@@ -1,32 +1,23 @@
 package io.github.xarrow.rmt.api.websocket;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.pty4j.PtyProcess;
 import com.pty4j.WinSize;
 import com.sun.jna.Platform;
 import io.github.xarrow.rmt.api.exception.TerminalProcessException;
+import io.github.xarrow.rmt.api.lifecycle.AbstractTerminalProcess;
+import io.github.xarrow.rmt.api.protocol.TerminalCommandQueue;
+import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import io.github.xarrow.rmt.api.session.ProcessWrapper;
 import io.github.xarrow.rmt.api.session.TerminalContext;
-import io.github.xarrow.rmt.api.session.TerminalSession2ProcessManager;
+import io.github.xarrow.rmt.api.session.TerminalContextManager;
 import lombok.extern.slf4j.Slf4j;
-import io.github.xarrow.rmt.api.lifecycle.AbstractTerminalProcess;
-import io.github.xarrow.rmt.api.listener.TerminalProcessListenerManager;
-import io.github.xarrow.rmt.api.protocol.TerminalMessage;
-import io.github.xarrow.rmt.api.protocol.TerminalCommandQueue;
 import org.springframework.web.socket.WebSocketSession;
 
-import static io.github.xarrow.rmt.commons.TerminalThreadHelper.errorHandlerThreadPool;
-import static io.github.xarrow.rmt.commons.TerminalThreadHelper.heartbeatHandlerThreadPool;
-import static io.github.xarrow.rmt.commons.TerminalThreadHelper.readerHandlerThreadPool;
-import static io.github.xarrow.rmt.commons.TerminalThreadHelper.writeHandlerThreadPool;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static io.github.xarrow.rmt.commons.TerminalThreadHelper.*;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -36,14 +27,15 @@ import static io.github.xarrow.rmt.commons.TerminalThreadHelper.writeHandlerThre
  */
 @Slf4j
 public class TerminalSessionProcess extends AbstractTerminalProcess {
-    private TerminalProcessExtend terminalProcessExtend;
+    protected TerminalProcessExtend terminalProcessExtend;
+
     private TerminalCommandQueue<String> terminalCommandQueue;
-    private TerminalProcessListenerManager terminalProcessListenerManager;
+    private TerminalContextManager terminalContextManager;
 
     public void setTerminalProcessExtend(TerminalProcessExtend terminalProcessExtend) {
         this.terminalProcessExtend = terminalProcessExtend;
         this.terminalCommandQueue = terminalProcessExtend.getTerminalCommandQueue();
-        this.terminalProcessListenerManager = terminalProcessExtend.getTerminalProcessListenerManager();
+        this.terminalContextManager = terminalProcessExtend.getTerminalContextManager();
     }
 
     /**
@@ -99,8 +91,10 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
             doInitBash(session, message);
         }
         String command = ((TerminalRQ) message).getCommand();
-        // 5. before command execute listener
-        terminalProcessExtend.doBeforeCommandListener(message);
+        // 5. before command execute listener, you can modify command via this expand
+        byte[] commandBytes = command.getBytes();
+        terminalProcessExtend.doBeforeCommandInterceptor(commandBytes);
+        command = new String(commandBytes);
         // put into queue , do async action
         terminalCommandQueue.putMessage(command);
 
@@ -108,13 +102,13 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
         // get from queue
         String commandMessage = terminalCommandQueue.pollMessage();
         // 6. before command interceptor
-        terminalProcessExtend.doBeforeCommandInterceptor(commandMessage.getBytes(Charset.defaultCharset()));
-        writeHandlerThreadPool.submit(new WriteToProcessBufferedThread(this.stdout, commandMessage));
+        writeHandlerThreadPool.submit(new WriteToProcessBufferedThread(this.stdout, commandMessage, terminalProcessExtend));
     }
 
     @Override
     public void terminalHeartbeat(WebSocketSession webSocketSession, TerminalMessage terminalMessage) {
-        heartbeatHandlerThreadPool.submit(new HeartbeatBufferedReaderThread().setTerminalProcessListenerManager(terminalProcessListenerManager).setWebSocketSession(webSocketSession));
+        heartbeatHandlerThreadPool.submit(
+                new HeartbeatBufferedReaderThread(this.stdin, webSocketSession));
     }
 
     @Override
@@ -122,30 +116,25 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
         try {
             webSocketSession.close();
 
-            if (null == this.ptyProcess || !this.ptyProcess.isAlive()) {
+            if (null == this.process || !this.process.isAlive()) {
                 return;
             }
-            this.ptyProcess.destroy();
+            this.process.destroy();
         } catch (IOException e) {
-            log.error("");
+            e.printStackTrace();
         } finally {
-            doCloseNotify(message);
-            terminalContextManager.removeSession(new TerminalContext() {
-                @Override
-                public WebSocketSession webSocketSession() {
-                    return webSocketSession;
-                }
-            });
+            terminalProcessExtend.doClosedListener(message);
         }
     }
 
 
-    protected void doInitBash(WebSocketSession session, TerminalMessage message) throws IOException, TerminalProcessException {
+    protected void doInitBash(WebSocketSession session, TerminalMessage message)
+            throws IOException, TerminalProcessException {
         if (this.init) {
             return;
         }
         //2. before init
-        doBeforeInitListener(message);
+        terminalProcessExtend.doBeforeInitListener(message);
         // directory
         String userHome = System.getProperty("user.home");
         // cmd
@@ -164,13 +153,15 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
 
         PtyProcess process = null;
         TerminalContext terminalContext = terminalContextManager.getTerminalContext(session.getId());
-        ProcessWrapper processWrapper = terminalContext.process();
         // get process from manager cache
-        if (null != processWrapper && processWrapper.process().isAlive()) {
-            Process processInWrapper = processWrapper.process();
-            if (processInWrapper instanceof PtyProcess) {
-                process = (PtyProcess) processInWrapper;
+        if (null != terminalContext && null != terminalContext.processWrapper()) {
+            ProcessWrapper processWrapper = terminalContext.processWrapper();
+            if (null != processWrapper && null != processWrapper.process() && processWrapper.process().isAlive()) {
+                if (processWrapper.process() instanceof PtyProcess) {
+                    process = (PtyProcess) processWrapper.process();
+                }
             }
+
         } else {
             process = PtyProcess.exec(command, envs, userHome);
         }
@@ -190,41 +181,20 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
         errorHandlerThreadPool.submit(
                 new RespondToWebBufferedThread(
                         this.stderr,
-                        session));
+                        session,
+                        terminalProcessExtend
+                ));
         //just print to web
         readerHandlerThreadPool.submit(
                 new RespondToWebBufferedThread(
                         this.stdin,
-                        session
-                )
-        );
+                        session,
+                        terminalProcessExtend
+                ));
 
         // 3. after init
-        doAfterInitListener(message, process);
+        terminalProcessExtend.doAfterInitListener(message, process);
         // 4. lifecycle listener
-        doLifeCycleListener(this);
-    }
-
-
-    public void setTerminalProcessListenerManager(TerminalProcessListenerManager terminalProcessListenerManager) {
-        this.terminalProcessListenerManager = terminalProcessListenerManager;
-    }
-
-    public void setTerminalMessageQueue(TerminalCommandQueue<String> terminalCommandQueue) {
-        this.terminalMessageQueue = terminalCommandQueue;
-    }
-
-    public void setTerminalSession2ProcessManager(TerminalSession2ProcessManager terminalSession2ProcessManager) {
-        super.setTerminalSession2ProcessManager(terminalSession2ProcessManager);
-    }
-
-    @Override
-    protected WebSocketSession currentSession() {
-        return webSocketSession;
-    }
-
-    @Override
-    protected PtyProcess currentProcess() {
-        return ptyProcess;
+        terminalProcessExtend.doLifeCycleListener(this);
     }
 }

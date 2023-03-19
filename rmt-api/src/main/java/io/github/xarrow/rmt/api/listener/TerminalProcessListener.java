@@ -1,10 +1,5 @@
 package io.github.xarrow.rmt.api.listener;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.Writer;
-
-import com.pty4j.PtyProcess;
 import io.github.xarrow.rmt.api.lifecycle.TerminalProcess;
 import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -36,10 +31,6 @@ public interface TerminalProcessListener extends TerminalListenerOrder {
     default void sessionConnect(WebSocketSession webSocketSession) {
     }
 
-    // todo delete 准备
-    default void prepared(TerminalMessage message) {
-    }
-
     // 初始化之前
     default void beforeInit(TerminalMessage message) {
     }
@@ -56,28 +47,11 @@ public interface TerminalProcessListener extends TerminalListenerOrder {
     /**
      * before command execute, and before push Queue
      *
-     * @param message
+     * @param commandBytes
      */
-    default void beforeCommand(TerminalMessage message) {
+    default void beforeCommandInterceptor(byte[] commandBytes) {
     }
 
-    /**
-     * 发送process 原始报文
-     *
-     * @param bytes
-     * @param writer
-     */
-    default void requestToPty(final byte[] bytes, final Writer writer) {
-    }
-
-    /**
-     * process 返回原始报文
-     *
-     * @param bytes
-     * @param webSocketSession
-     */
-    default void responseFromPty(final byte[] bytes, final WebSocketSession webSocketSession) {
-    }
 
     // 发送命令之后，保留
     default void afterCommand(TerminalMessage message) {

@@ -1,13 +1,14 @@
 package io.github.xarrow.rmt.api.websocket;
 
-import java.text.MessageFormat;
-
 import io.github.xarrow.rmt.api.lifecycle.TerminalProcess;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.text.MessageFormat;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -19,6 +20,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class TerminalTextWebSocketHandler extends TextWebSocketHandler {
     private TerminalProcess terminalProcess;
 
+    @Autowired
     public void setTerminalProcess(TerminalProcess terminalProcess) {
         this.terminalProcess = terminalProcess;
     }

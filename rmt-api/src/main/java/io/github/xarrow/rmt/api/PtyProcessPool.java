@@ -1,7 +1,6 @@
 package io.github.xarrow.rmt.api;
 
 import com.pty4j.PtyProcess;
-import com.pty4j.unix.Pty;
 import com.sun.jna.Platform;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

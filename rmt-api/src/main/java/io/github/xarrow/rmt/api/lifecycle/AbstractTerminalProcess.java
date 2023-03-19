@@ -1,7 +1,6 @@
 package io.github.xarrow.rmt.api.lifecycle;
 
 import com.pty4j.PtyProcess;
-import org.springframework.web.socket.WebSocketSession;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,9 +26,5 @@ public abstract class AbstractTerminalProcess implements TerminalProcess {
     protected int rows = 20;
     protected int width = 20;
     protected int height = 20;
-
-    protected abstract WebSocketSession currentSession();
-
-    protected abstract PtyProcess currentProcess();
 
 }

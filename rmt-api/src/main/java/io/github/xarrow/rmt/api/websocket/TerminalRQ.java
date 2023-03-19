@@ -1,11 +1,10 @@
 package io.github.xarrow.rmt.api.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import io.github.xarrow.rmt.api.protocol.AbstractTerminalStructure.AbstractRQ;
-import io.github.xarrow.rmt.api.protocol.TerminalMessage;
 import org.springframework.web.socket.TextMessage;
 
 import java.io.Serializable;
@@ -19,7 +18,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class TerminalRQ extends AbstractRQ implements Serializable {
+public class TerminalRQ extends AbstractTerminalStructure implements Serializable {
+    // text
+    protected String text;
+    //type
+    protected MessageType type;
     //command
     private String command;
     // resize
@@ -28,12 +31,8 @@ public class TerminalRQ extends AbstractRQ implements Serializable {
     private int cols;
     private int rows;
 
-    public TerminalRQ toTerminalRQ(final TextMessage textMessage) throws Exception {
-        return toTerminalMessage(textMessage);
-    }
-
-    @Override
-    protected TerminalRQ toTerminalMessage(final TextMessage textMessage) throws Exception {
+    public TerminalRQ toTerminalRQ(TextMessage textMessage) throws Exception {
+        this.textMessage = textMessage;
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(textMessage.getPayload(), TerminalRQ.class);
     }

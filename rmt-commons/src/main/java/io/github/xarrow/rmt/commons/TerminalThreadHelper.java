@@ -26,11 +26,14 @@ public class TerminalThreadHelper {
     }
 
     public static ExecutorService readerHandlerThreadPool = Executors.newFixedThreadPool(3,
-        new TerminalThreadFactory().setThreadName("stdout"));
+            new TerminalThreadFactory().setThreadName("stdout"));
     public static ExecutorService errorHandlerThreadPool = Executors.newFixedThreadPool(3,
-        new TerminalThreadFactory().setThreadName("stderr"));
+            new TerminalThreadFactory().setThreadName("stderr"));
     public static ExecutorService writeHandlerThreadPool = Executors.newFixedThreadPool(3,
-        new TerminalThreadFactory().setThreadName("stdin"));
+            new TerminalThreadFactory().setThreadName("stdin"));
     public static ExecutorService heartbeatHandlerThreadPool = Executors.newFixedThreadPool(1,
-        new TerminalThreadFactory().setThreadName("heartbeat"));
+            new TerminalThreadFactory().setThreadName("heartbeat"));
+    public static ExecutorService pollMessageHandlerThreadPool = Executors.newFixedThreadPool(3,
+            new TerminalThreadFactory().setThreadName("pollMessage"));
+
 }

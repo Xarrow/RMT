@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -15,10 +14,20 @@ import java.nio.charset.StandardCharsets;
 public class WriteToProcessBufferedThread extends AbstractBufferedThread {
     protected BufferedWriter bufferedWriter;
     private String command;
+    private TerminalProcessExtend terminalProcessExtend;
 
-    public WriteToProcessBufferedThread(BufferedWriter bufferedWriter, String command) {
+    public WriteToProcessBufferedThread(BufferedWriter bufferedWriter,
+                                        String command) {
         this.bufferedWriter = bufferedWriter;
         this.command = command;
+    }
+
+    public WriteToProcessBufferedThread(BufferedWriter bufferedWriter,
+                                        String command,
+                                        TerminalProcessExtend terminalProcessExtend) {
+        this.bufferedWriter = bufferedWriter;
+        this.command = command;
+        this.terminalProcessExtend = terminalProcessExtend;
     }
 
     @SneakyThrows

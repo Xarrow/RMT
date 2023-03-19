@@ -37,7 +37,8 @@ public abstract class AbstractTerminalProcessListenerManager implements Terminal
         return listenerMap.get(name);
     }
 
-    public Map<String, TerminalProcessListener> listenerMap() {
+    @Override
+    public Map<String, TerminalProcessListener> allListenerMap() {
         return listenerMap;
     }
 }

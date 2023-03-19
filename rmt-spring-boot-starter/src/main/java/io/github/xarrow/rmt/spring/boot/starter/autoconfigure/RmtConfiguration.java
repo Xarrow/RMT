@@ -8,6 +8,7 @@ import io.github.xarrow.rmt.api.protocol.TerminalCommandQueue;
 import io.github.xarrow.rmt.api.session.*;
 import io.github.xarrow.rmt.api.session.DefaultTerminalContextManager;
 import io.github.xarrow.rmt.api.session.TerminalContextManager;
+import io.github.xarrow.rmt.api.websocket.TerminalProcessExtend;
 import io.github.xarrow.rmt.api.websocket.TerminalTextWebSocketHandler;
 import io.github.xarrow.rmt.api.websocket.TerminalSessionProcess;
 import org.springframework.context.annotation.Bean;
@@ -15,51 +16,56 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.handler.PerConnectionWebSocketHandler;
 
+import java.util.Map;
+
 /**
  * @Author: helix
  * @Time:2022/7/30
  * @Site: https://github.com/xarrow
  * <p>
- * todo  拓展
  */
 public class RmtConfiguration {
-    @Bean
-    public WebSocketHandler webSocketHandler() {
+
+    @Bean(name = "terminalProcess")
+    @Scope("prototype")
+    public TerminalProcess terminalProcess() {
+        TerminalSessionProcess terminalSessionProcess = new TerminalSessionProcess();
+        TerminalProcessExtend terminalProcessExtend = new TerminalProcessExtend();
+
+        terminalProcessExtend.setTerminalCommandQueue(new DefaultTerminalCommandQueue());
+        terminalProcessExtend.setTerminalProcessListenerManager(new DefaultTerminalListenerManager());
+        terminalProcessExtend.setTerminalContextManager(new DefaultTerminalContextManager());
+        terminalSessionProcess.setTerminalProcessExtend(terminalProcessExtend);
+
+        return terminalSessionProcess;
+    }
+
+    @Bean(name = "terminalWebSocketHandler")
+    public WebSocketHandler terminalWebSocketHandler() {
         return new PerConnectionWebSocketHandler(TerminalTextWebSocketHandler.class);
     }
 
-    /**
-     * lifecycle
-     *
-     * @return
-     */
-    @Bean(value = "terminalProcessLifecycle")
-    @Scope("prototype")
-    public TerminalProcess terminalProcessLifecycle() {
-        return new TerminalSessionProcess();
-    }
-
     // 监听器管理
-    @Bean
-    public TerminalProcessListenerManager terminalProcessListenerManager() {
-        return new DefaultTerminalListenerManager();
-    }
+//    @Bean
+//    public TerminalProcessListenerManager terminalProcessListenerManager() {
+//        return new DefaultTerminalListenerManager();
+//    }
 
     // messageQueue
-    @Bean
-    public TerminalCommandQueue<String> terminalMessageQueue() {
-        return new DefaultTerminalCommandQueue();
-    }
+//    @Bean
+//    public TerminalCommandQueue<String> terminalMessageQueue() {
+//        return new DefaultTerminalCommandQueue();
+//    }
 
     // sessionManager
-    @Bean(value = "terminalSessionManager")
-    public TerminalContextManager terminalSessionManager() {
-        return new DefaultTerminalContextManager();
-    }
+//    @Bean(value = "terminalSessionManager")
+//    public TerminalContextManager terminalSessionManager() {
+//        return new DefaultTerminalContextManager();
+//    }
 
     // session2processManager
-    @Bean
-    public TerminalSession2ProcessManager terminalSession2ProcessManager() {
-        return new DefaultTerminalSession2ProcessManager();
-    }
+//    @Bean
+//    public TerminalSession2ProcessManager terminalSession2ProcessManager() {
+//        return new DefaultTerminalSession2ProcessManager();
+//    }
 }
