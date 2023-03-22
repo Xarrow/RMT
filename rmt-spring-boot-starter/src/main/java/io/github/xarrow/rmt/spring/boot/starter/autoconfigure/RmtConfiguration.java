@@ -54,7 +54,7 @@ public class RmtConfiguration {
         DefaultTerminalListenerManager defaultTerminalListenerManager = new DefaultTerminalListenerManager();
         defaultTerminalListenerManager.registerListener(appBannerLoadListener);
         // set context listener
-        defaultTerminalListenerManager.registerListener(terminalContextListener);
+//        defaultTerminalListenerManager.registerListener(terminalContextListener);
         return defaultTerminalListenerManager;
     }
 
@@ -71,7 +71,7 @@ public class RmtConfiguration {
             @Qualifier("terminalContextListener") TerminalContextListener terminalContextListener) {
 
         DefaultTerminalContextManager contextManager = new DefaultTerminalContextManager();
-        contextManager.registerTerminalContext(terminalContextListener);
+//        contextManager.registerTerminalContext(terminalContextListener);
         return contextManager;
     }
 

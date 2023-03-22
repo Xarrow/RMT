@@ -114,7 +114,6 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
     public void terminalClose(WebSocketSession webSocketSession, final TerminalMessage message) {
         try {
             webSocketSession.close();
-
             if (null == this.process || !this.process.isAlive()) {
                 return;
             }

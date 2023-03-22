@@ -45,7 +45,15 @@ public abstract class AbstractTerminalContextManager implements TerminalContextM
 
     @Override
     public void removeTerminalContext(TerminalContext terminalContext) {
-        removeSession(terminalContext.session().getId());
+        // no terminalContext implement
+        if (null == terminalContext) {
+            return;
+        }
+        WebSocketSession session = terminalContext.session();
+        if (null == session) {
+            return;
+        }
+        removeSession(session.getId());
     }
 
     @Override

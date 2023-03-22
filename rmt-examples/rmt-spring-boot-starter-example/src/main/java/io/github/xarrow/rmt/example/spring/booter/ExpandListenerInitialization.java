@@ -28,8 +28,9 @@ public class ExpandListenerInitialization implements InitializingBean, Applicati
 //        appBasicInfoListener.setSpringApplicationContext(applicationContext);
 
         AppBannerLoadListener bannerLoadListener = new AppBannerLoadListener();
-        bannerLoadListener.setSpringApplicationContext(applicationContext);
+//        bannerLoadListener.setSpringApplicationContext(applicationContext);
         // banner
+
         terminalProcessListenerManager.registerListener(bannerLoadListener);
         // APP 基础信息
 //        terminalProcessListenerManager.registerListener(appBasicInfoListener);
