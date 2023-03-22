@@ -122,7 +122,7 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            terminalProcessExtend.doClosedListener(message);
+            terminalProcessExtend.doClosedListener(webSocketSession, message);
         }
     }
 
@@ -195,5 +195,7 @@ public class TerminalSessionProcess extends AbstractTerminalProcess {
         terminalProcessExtend.doAfterInitListener(message, process);
         // 4. lifecycle listener
         terminalProcessExtend.doLifeCycleListener(this);
+
+        terminalContextManager.buildTerminalContext();
     }
 }

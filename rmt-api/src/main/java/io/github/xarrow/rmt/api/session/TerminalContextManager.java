@@ -1,6 +1,7 @@
 package io.github.xarrow.rmt.api.session;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Email: zhangjian12424@gmail.com.
@@ -13,9 +14,14 @@ public interface TerminalContextManager {
     /**
      * register sessionContext
      *
-     * @param terminalContext
+     * @param terminalContexts
      */
-    void registerTerminalContext(TerminalContext terminalContext);
+    void registerTerminalContext(TerminalContext... terminalContexts);
+
+    /**
+     * build terminalContext as map
+     */
+    void buildTerminalContext();
 
     /**
      * remove session
@@ -38,5 +44,8 @@ public interface TerminalContextManager {
      * @return
      */
     Map<String, TerminalContext> allTerminalContextMap();
+
+    @Deprecated
+    Set<TerminalContext> testSet();
 
 }

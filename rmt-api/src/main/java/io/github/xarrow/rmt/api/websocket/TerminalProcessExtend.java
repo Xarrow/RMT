@@ -4,6 +4,7 @@ import io.github.xarrow.rmt.api.lifecycle.TerminalProcess;
 import io.github.xarrow.rmt.api.listener.TerminalProcessListenerManager;
 import io.github.xarrow.rmt.api.protocol.TerminalCommandQueue;
 import io.github.xarrow.rmt.api.protocol.TerminalMessage;
+import io.github.xarrow.rmt.api.session.TerminalContext;
 import io.github.xarrow.rmt.api.session.TerminalContextManager;
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
@@ -45,7 +46,12 @@ public class TerminalProcessExtend {
         terminalProcessListenerManager.allListenerMap().forEach((key, value) -> value.afterCommand(terminalMessage));
     }
 
-    public void doClosedListener(TerminalMessage terminalMessage) {
+    public void doClosedListener(WebSocketSession webSocketSession, TerminalMessage terminalMessage) {
+        // terminalContext remove
+        TerminalContext terminalContext = terminalContextManager.getTerminalContext(webSocketSession.getId());
+        terminalContextManager.removeTerminalContext(terminalContext);
+
+        // terminal Listener remove
         terminalProcessListenerManager.allListenerMap().forEach((key, value) -> value.closed(terminalMessage));
     }
 

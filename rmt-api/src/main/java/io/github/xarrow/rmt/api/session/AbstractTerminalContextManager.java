@@ -1,18 +1,41 @@
 package io.github.xarrow.rmt.api.session;
 
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.socket.WebSocketSession;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SessionId ==> TerminalContext
  */
 public abstract class AbstractTerminalContextManager implements TerminalContextManager {
+    // when app start , custom terminalContext is registered
+    private final Set<TerminalContext> terminalContextSet = new HashSet<>();
+    // echo session has one TerminalContext
     private final Map<String, TerminalContext> terminalContextMap = new ConcurrentHashMap<>();
 
+
     @Override
-    public void registerTerminalContext(TerminalContext terminalContext) {
-        String sessionId = terminalContext.session().getId();
-        terminalContextMap.put(sessionId, terminalContext);
+    public void registerTerminalContext(TerminalContext... terminalContexts) {
+        Collections.addAll(terminalContextSet, terminalContexts);
+    }
+
+    @Override
+    public void buildTerminalContext() {
+        if (CollectionUtils.isEmpty(terminalContextSet)) {
+            return;
+        }
+
+        for (TerminalContext terminalContext : terminalContextSet) {
+            WebSocketSession session = terminalContext.session();
+            if (null == session) {
+                continue;
+            }
+            String sessionId = session.getId();
+            terminalContextMap.put(sessionId, terminalContext);
+        }
     }
 
     @Override
@@ -30,7 +53,16 @@ public abstract class AbstractTerminalContextManager implements TerminalContextM
         return terminalContextMap;
     }
 
+    @Override
+    public Set<TerminalContext> testSet() {
+        return terminalContextSet;
+    }
+
     public void removeSession(final String sessionId) {
+        TerminalContext terminalContext = allTerminalContextMap().get(sessionId);
+        if (null == terminalContext) {
+            return;
+        }
         allTerminalContextMap().remove(sessionId);
     }
 }
